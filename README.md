@@ -1,4 +1,4 @@
-## deezer-dl
+## dz-dl
 
 Simple AngularJS 2 application downloading Deezer playlists / albums from Youtube
 
