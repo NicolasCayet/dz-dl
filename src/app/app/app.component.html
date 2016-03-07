@@ -1,0 +1,5 @@
+<div *ngIf="isLoggedIn">
+    Hello {{currentUser.name}} ! <img *ngIf="currentUser.picture_small" src="{{currentUser.picture_small}}" />
+</div>
+
+<router-outlet></router-outlet>

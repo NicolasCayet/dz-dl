@@ -1,0 +1,1 @@
+/// <reference path="custom/deezer/deezer.d.ts" />
