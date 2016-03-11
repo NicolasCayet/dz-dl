@@ -5,6 +5,8 @@
 
     <title>Deezer Download</title>
 
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- 1. Load libraries -->
     <!-- IE required polyfills, in this exact order -->
     <script src="lib/es6-shim.min.js"></script>
@@ -16,6 +18,7 @@
     <script src="lib/angular2.dev.js"></script>
     <script src="lib/router.dev.js"></script>
     <script src="lib/http.dev.js"></script>
+    <script src="lib/ng2-bootstrap.js"></script>
     <script src="lib/dz.js"></script>
 
     <!-- 2. Configure SystemJS -->
@@ -25,7 +28,20 @@
                 app: {
                     format: 'register',
                     defaultExtension: 'js'
+                },
+                util: {
+                    main: 'util.js',
+                    format: 'cjs',
+                    defaultExtension: 'js'
                 }
+            },
+            map: {
+                config: 'config.js',
+                moment: 'lib/moment.js',
+                'nested-property': 'lib/nested-property.js',
+                util: 'lib/util',
+                assert: 'lib/assert.js',
+                inherits: 'lib/inherits_browser.js',
             }
         });
         System.import('app/boot')

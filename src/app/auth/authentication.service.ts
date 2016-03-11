@@ -2,12 +2,13 @@ import {Injectable} from 'angular2/core';
 import {RouteParams} from 'angular2/router';
 import {CurrentUserEntity} from './current-user.entity';
 import {Http, Response, RequestOptions, Headers, RequestMethod} from 'angular2/http';
+import {DateUtil} from '../common/date.util';
 
 @Injectable()
 export class AuthenticationService {
     private accessToken: string;
     private accessTokenExpiresAt: number;
-    private currentUser: CurrentUserEntity;
+    currentUser: CurrentUserEntity;
     private http: Http;
 
     private authorizeUrl = 'https://connect.deezer.com/oauth/auth.php';
@@ -26,11 +27,11 @@ export class AuthenticationService {
     }
 
     isLoggedIn() {
-        if (this.accessToken && this.accessTokenExpiresAt && this.accessTokenExpiresAt > (Date.now()/1000)) {
+        if (this.accessToken && this.accessTokenExpiresAt && this.accessTokenExpiresAt > DateUtil.timestampSec()) {
             console.log('is connected '+this.accessToken+' '+this.accessTokenExpiresAt);
             return true;
         } else {
-            console.log('not connected '+this.accessToken+' '+this.accessTokenExpiresAt+ ' '+Date.now());
+            console.log('not connected '+this.accessToken+' '+this.accessTokenExpiresAt);
             return false;
         }
     }
@@ -102,16 +103,15 @@ export class AuthenticationService {
         if (!this.accessToken) {
             return false;
         }
-        this.http.get('https://api.deezer.com/user/me')
-            .subscribe(
-                response => function(response) {
-                    this.currentUser = {
-                        id: response.id,
-                        name: response.name,
-                        picture_small: response.picture_small
-                    }
-                }
-            );
+
+        DZ.api('/user/me', response => {
+            console.dir(response);
+            this.currentUser = {
+                id: response.id,
+                name: response.name,
+                picture_small: response.picture_small
+            }
+        });
 
         return true;
     }

@@ -1,0 +1,55 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">
+                <img alt="Default Logo" src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRjYPwl_faLkluaWEAJpvZllu-C2kXgvXALW8REbn13Vc3NdwxF8g">
+            </a>
+        </div>
+        <!-- Menu -->
+        <ul class="nav navbar-nav">
+            <li><a [routerLink]="['Dashboard']">Home</a></li>
+        </ul>
+
+        <!-- User profile -->
+        <ul class="nav navbar-nav navbar-right">
+            <li dropdown autoClose="outsideClick">
+                <a href id="current-user-dropdown" dropdownToggle>
+                    <span class="glyphicon glyphicon-user"></span>
+                    <span class="sr-only">Profile</span>
+                    <span *ngIf="authService.currentUser">
+                        &nbsp;{{ authService.currentUser.name }}
+                    </span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" dropdownMenu aria-labelledby="current-user-dropdown">
+                    <li *ngIf="authService.getCurrentUser()">
+                        <div class="container-fluid" id="profile-excerpt">
+                            <dl>
+                                <dd>
+                                    <img *ngIf="authService.currentUser.picture_small" src="{{authService.currentUser.picture_small}}" />
+                                </dd>
+                                <dd>
+                                    {{ authService.currentUser.name }} #{{ authService.currentUser.id }}
+                                </dd>
+                                <dd>
+                                    <a href="#">Your account</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li *ngIf="!authService.isLoggedIn">
+                        <button type="button" class="btn btn-primary center-block"
+                                (click)="loginClick()">Login
+                        </button>
+                    </li>
+                    <li *ngIf="authService.isLoggedIn">
+                        <button type="button" class="btn btn-primary center-block"
+                                (click)="logoutClick()">Logout
+                        </button>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<h1>Digital Tourism - Back Office</h1>

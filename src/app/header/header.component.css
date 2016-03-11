@@ -1,0 +1,16 @@
+.navbar-brand {
+    padding: 10px;
+}
+
+.navbar-right {
+    margin-right: 0px;
+}
+
+.navbar-brand img {
+    max-height: 30px;
+}
+
+#profile-excerpt .avatar {
+    max-height: 30px;
+    max-width: 30px;
+}

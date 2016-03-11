@@ -1,5 +1,14 @@
-<div *ngIf="isLoggedIn">
-    Hello {{currentUser.name}} ! <img *ngIf="currentUser.picture_small" src="{{currentUser.picture_small}}" />
+
+<div class="container">
+    <bo-header></bo-header>
+
+    <alert *ngFor="#alert of alertService.alerts" [type]="alert.type"
+           [dismissible]="alert.dismissible"
+           [dismissOnTimeout]="alert.dismissOnTimeout">
+        <div [innerHtml]="alert.message"></div>
+    </alert>
+
+    <router-outlet></router-outlet>
 </div>
 
-<router-outlet></router-outlet>
+<div id="dz-root"></div>
