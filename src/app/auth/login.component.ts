@@ -1,8 +1,6 @@
 import {Component, OnInit} from 'angular2/core';
-import {AuthService} from '../auth/auth.service';
+import {AuthenticationService} from '../auth/authentication.service';
 import {Router} from 'angular2/router';
-
-/// <reference path="../../../typings/custom/deezer/deezer.d.ts" />
 
 @Component({
     selector: 'login',
@@ -10,14 +8,13 @@ import {Router} from 'angular2/router';
 })
 export class LoginComponent implements OnInit{
 
-    constructor(private _authService: AuthService, router: Router) {
+    constructor(private _authService: AuthenticationService, router: Router) {
         /*if (_authService.isLoggedIn()) {
             router.navigateByUrl(router.lastNavigationAttempt);
         }*/
     }
 
     onLoginClick() {
-        console.log('click login dz');
         DZ.login(function(response) {
             console.dir(response);
             if (response.authResponse) {
@@ -34,7 +31,7 @@ export class LoginComponent implements OnInit{
     ngOnInit() {
         DZ.init({
             appId: this._authService.clientId,
-            channelUrl: 'http://deezer-dl.local/channel.html'
+            channelUrl: location.origin + '/deezer-channel-jsonp.html'
         });
     }
 }

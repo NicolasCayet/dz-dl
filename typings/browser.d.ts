@@ -1,1 +1,1 @@
-/// <reference path="custom/deezer/deezer.d.ts" />
+/// <reference path="browser/definitions/moment/moment.d.ts" />

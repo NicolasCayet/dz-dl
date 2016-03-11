@@ -4,7 +4,7 @@ import {LoginComponent} from '../auth/login.component';
 import {DashboardComponent} from '../dashboard/dashboard.component';
 import {LoggedInRouterOutlet} from './logged-in-outlet.directive';
 import {OauthCallbackComponent} from '../auth/oauth-callback.component';
-import {AuthService} from '../auth/auth.service';
+import {AuthenticationService} from '../auth/authentication.service';
 import {CurrentUserEntity} from '../auth/current-user.entity';
 
 @Component({
@@ -12,7 +12,7 @@ import {CurrentUserEntity} from '../auth/current-user.entity';
     templateUrl: 'app/app/app.component.html',
     styleUrls: ['app/app/app.component.css'],
     directives: [ROUTER_DIRECTIVES, LoggedInRouterOutlet],
-    providers: [ROUTER_PROVIDERS, AuthService]
+    providers: [ROUTER_PROVIDERS, AuthenticationService]
 })
 @RouteConfig([
     {
@@ -41,7 +41,7 @@ import {CurrentUserEntity} from '../auth/current-user.entity';
 export class AppComponent implements OnInit{
     public currentUser: CurrentUserEntity;
 
-    constructor(private _auth: AuthService) {}
+    constructor(private _auth: AuthenticationService) {}
 
     ngOnInit() {
         this.currentUser = this._auth.getCurrentUser();

@@ -1,6 +1,6 @@
 import {Directive, Attribute, ElementRef, DynamicComponentLoader} from 'angular2/core';
 import {Router, RouterOutlet, ComponentInstruction} from 'angular2/router';
-import {AuthService} from '../auth/auth.service';
+import {AuthenticationService} from '../auth/authentication.service';
 
 /**
  * Analyze if a Route is accessible or if client should be redirected to login page
@@ -26,7 +26,7 @@ export class LoggedInRouterOutlet extends RouterOutlet {
 
 
     constructor(_elementRef: ElementRef, _loader: DynamicComponentLoader,
-                _parentRouter: Router, nameAttr: string, private _authService: AuthService) {
+                _parentRouter: Router, nameAttr: string, private _authService: AuthenticationService) {
         super(_elementRef, _loader, _parentRouter, nameAttr);
 
         this.parentRouter = _parentRouter;

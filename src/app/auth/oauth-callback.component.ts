@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {AuthService} from '../auth/auth.service';
+import {AuthenticationService} from '../auth/authentication.service';
 import {RouteParams} from 'angular2/router';
 
 @Component({
@@ -9,7 +9,7 @@ import {RouteParams} from 'angular2/router';
 export class OauthCallbackComponent {
     loggedIn: boolean;
 
-    constructor(_params: RouteParams, _authService: AuthService) {
+    constructor(_params: RouteParams, _authService: AuthenticationService) {
         this.loggedIn = _authService.tryLoginFromImplicit(_params);
     }
 }
