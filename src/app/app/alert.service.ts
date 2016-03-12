@@ -15,9 +15,16 @@ export class AlertService {
     // using an indexed array is mandatory, *ngFor only support standard array
     alerts: AlertProperties[] = [];
     // identifierMap maps fixed identifier of an alert to its changeable index in the alerts array pool
-    private identifierMap: Map<number, number>;
+    private identifierMap: Map<number, number> = new Map<number, number>();
     private lastIdentifier: number = 0;
 
+    /**
+     * Remove all allerts
+     */
+    clean() {
+        this.alerts = [];
+        this.identifierMap = new Map<number, number>();
+    }
     /**
      * Push and render the alert; returns the identifier of the alert in the alerts pool
      * @param alert

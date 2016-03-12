@@ -19,6 +19,7 @@ export class HeaderComponent {
     }
 
     logoutClick() {
-        console.log('not implemented');
+        this.authService.logout();
+        this._router.navigate(['Login']);
     }
 }

@@ -1,6 +1,7 @@
 import {Directive, Attribute, ElementRef, DynamicComponentLoader} from 'angular2/core';
-import {Router, RouterOutlet, ComponentInstruction} from 'angular2/router';
+import {Router, RouterOutlet, ComponentInstruction, RouteData} from 'angular2/router';
 import {AuthenticationService} from '../auth/authentication.service';
+import {LoginComponent} from '../auth/login.component';
 
 /**
  * Analyze if a Route is accessible or if client should be redirected to login page
@@ -24,7 +25,6 @@ import {AuthenticationService} from '../auth/authentication.service';
 export class LoggedInRouterOutlet extends RouterOutlet {
     private parentRouter: Router;
 
-
     constructor(_elementRef: ElementRef, _loader: DynamicComponentLoader,
                 _parentRouter: Router, nameAttr: string, private _authService: AuthenticationService) {
         super(_elementRef, _loader, _parentRouter, nameAttr);
@@ -33,10 +33,29 @@ export class LoggedInRouterOutlet extends RouterOutlet {
     }
 
     activate(instruction: ComponentInstruction) {
-        if (!instruction.routeData.get('isPublic') && !this._authService.isLoggedIn()) {
-            this.parentRouter.navigate(['Login']);
+        if (!this._authService.isLoggedIn) {
+            this._authService.logRememberedUser().then(
+                currentUser => {
+                    return super.activate(instruction);
+                },
+                rejected => {
+                    if (!instruction.routeData.get('isPublic') && !this._authService.isLoggedIn) {
+                        return super.activate(new ComponentInstruction('Login', [], new RouteData(), LoginComponent, false, '1', {redirectUri: this.parentRouter.lastNavigationAttempt}));
+                    }
+
+                    return super.activate(instruction);
+                }
+            );
+        } else {
+            return super.activate(instruction);
+        }
+    }
+
+    routerCanReuse(nextInstruction: ComponentInstruction): Promise<boolean> {
+        if (!nextInstruction.routeData.get('isPublic') && !this._authService.isLoggedIn) {
+            return new Promise(resolve => resolve(false));
         }
 
-        return super.activate(instruction);
+        return super.routerCanReuse(nextInstruction);
     }
 }

@@ -85,6 +85,7 @@ gulp.task('compile', function () {
         .pipe(gulp.dest('build'))
 });
 
+// copy content in build/ directory to the dist/ directory
 gulp.task('deploy',function(){
     return gulp.src('build/src/**/*')
         .pipe(gulp.dest('dist'));

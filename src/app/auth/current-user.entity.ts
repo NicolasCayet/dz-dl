@@ -1,5 +1,5 @@
 export interface CurrentUserEntity {
     id: number;
-    name: string;
+    nickname: string;
     picture_small: string;
 }

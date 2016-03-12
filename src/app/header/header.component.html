@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand">
-                <img alt="Default Logo" src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRjYPwl_faLkluaWEAJpvZllu-C2kXgvXALW8REbn13Vc3NdwxF8g">
+                <img alt=" Logo" src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRjYPwl_faLkluaWEAJpvZllu-C2kXgvXALW8REbn13Vc3NdwxF8g">
             </a>
         </div>
         <!-- Menu -->
@@ -17,19 +17,19 @@
                     <span class="glyphicon glyphicon-user"></span>
                     <span class="sr-only">Profile</span>
                     <span *ngIf="authService.currentUser">
-                        &nbsp;{{ authService.currentUser.name }}
+                        &nbsp;{{ authService.currentUser.nickname }}
                     </span>
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" dropdownMenu aria-labelledby="current-user-dropdown">
-                    <li *ngIf="authService.getCurrentUser()">
+                    <li *ngIf="authService.currentUser">
                         <div class="container-fluid" id="profile-excerpt">
                             <dl>
                                 <dd>
                                     <img *ngIf="authService.currentUser.picture_small" src="{{authService.currentUser.picture_small}}" />
                                 </dd>
                                 <dd>
-                                    {{ authService.currentUser.name }} #{{ authService.currentUser.id }}
+                                    {{ authService.currentUser.nickname }} #{{ authService.currentUser.id }}
                                 </dd>
                                 <dd>
                                     <a href="#">Your account</a>
@@ -52,4 +52,4 @@
         </ul>
     </div>
 </nav>
-<h1>Digital Tourism - Back Office</h1>
+<h1>DZ Download</h1>
