@@ -42,7 +42,10 @@ gulp.task('copy:libs', function() {
         .pipe(gulp.dest('dist/lib'));
     /* nested-property module special load & requirements */
     gulp.src(['node_modules/util/**/*.js'])
-        .pipe(gulp.dest('dist/lib/util')); // for nested-property
+        .pipe(gulp.dest('dist/lib/util')); // for nested-property (Unix MAX OS loading)
+    gulp.src(['node_modules/assert/node_modules/util/**/*.js'])
+        .pipe(gulp.dest('dist/lib/util')); // for nested-property (Windows loading)
+
     gulp.src(['node_modules/nested-property/index.js'])
         .pipe(rename('nested-property.js'))
         .pipe(gulp.dest('dist/lib'));
@@ -62,7 +65,8 @@ gulp.task('copy:libs', function() {
             'node_modules/moment/moment.js',
             'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.js',
             'node_modules/assert/assert.js', // for nested-property
-            'node_modules/inherits/inherits_browser.js' // for nested-property
+            'node_modules/inherits/inherits_browser.js', // for nested-property UNIX MAC OS loading
+            'node_modules/assert/node_modules/util/node_modules/inherits/inherits_browser.js' // for nested-property Windows loading
         ])
         .pipe(gulp.dest('dist/lib'))
 });
