@@ -9,22 +9,18 @@ export class DeezerParsingService {
 
     getPlaylist(id:string) {
         // TODO need to call deezerAPIService to get the JSON instead of the mocked data
-        return this.parseData(JSON.stringify(JSONplaylist));
+        this.handleJsonTracks(JSON.stringify(JSONplaylist));
+        return this.trackList;
     }
 
     getAlbum(id:string) {
         // TODO need to call deezerAPIService to get the JSON instead of the mocked data
-        this.parseData(JSON.stringify(JSONalbum));
+        this.handleJsonTracks(JSON.stringify(JSONalbum));
         return this.trackList;
     }
 
-    parseData(json:string) {
-        this.handleJsonTracks(JSON.stringify(JSON.parse(json).tracks));
-        return this.trackList;
-    }
-
-    handleJsonTracks(partialJSON:string) {
-        let data = JSON.parse(partialJSON);
+    handleJsonTracks(json:string) {
+        let data = JSON.parse(json).tracks;
         let jsonTrack;
 
         // To reset the list for not adding witch each fetching
