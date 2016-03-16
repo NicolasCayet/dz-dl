@@ -1,0 +1,12 @@
+#searchBar, #tracksContainer  {
+    float: left;
+    width: 100%;
+}
+
+#leftGrid, #rightGrid {
+    float: left;
+    width: 50%;
+}
+
+.trackItem {
+}

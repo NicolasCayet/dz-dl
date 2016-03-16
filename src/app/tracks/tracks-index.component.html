@@ -1,6 +1,6 @@
 <h3>Fetch a playlist or an album</h3>
 
-<div>
+<div id="searchBar">
     <p>
         Identifiant
         <input [(ngModel)]="id" placeholder="id"/>
@@ -16,9 +16,13 @@
         <button (click)="fetchTracks()">Fetch</button>
     </p>
 </div>
+<div id="tracksContainer">
+    <div id="leftGrid" class="grid grid-pad" >
+        <div *ngFor="#track of trackList"  class="trackItem col-1-4" >
+                <h4>{{track.artistName + ": " + track.title +" : " + track.duration + " sec." }}</h4>
+        </div>
+    </div>
+    <div id="rightGrid">
 
-<div class="grid grid-pad">
-    <div *ngFor="#track of trackList"  class="col-1-4" >
-            <h4>{{track.title}}</h4>
     </div>
 </div>

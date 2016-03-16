@@ -7,7 +7,6 @@ import {TracksService} from '../entities/tracks.service'
     templateUrl: 'app/tracks/tracks-index.component.html',
     styleUrls: ['app/tracks/tracks-index.component.css']
 })
-
 export class TracksComponent {
     trackList: Track[];
 
