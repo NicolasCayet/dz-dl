@@ -1,0 +1,24 @@
+<h3>Fetch a playlist or an album</h3>
+
+<div>
+    <p>
+        Identifiant
+        <input [(ngModel)]="id" placeholder="id"/>
+    </p>
+    <p>
+        Type
+        <select [(ngModel)]="listType">
+            <option  value="playlist" selected>Playlist</option>
+            <option value="album">Album</option>
+        </select>
+    </p>
+    <p>
+        <button (click)="fetchTracks()">Fetch</button>
+    </p>
+</div>
+
+<div class="grid grid-pad">
+    <div *ngFor="#track of trackList"  class="col-1-4" >
+            <h4>{{track.title}}</h4>
+    </div>
+</div>

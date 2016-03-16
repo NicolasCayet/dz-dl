@@ -11,6 +11,9 @@ import {Alert} from 'ng2-bootstrap/ng2-bootstrap';
 import {ConfigService} from '../common/config.service';
 import {HeaderComponent} from '../header/header.component';
 import {CurrentUserService} from '../auth/current-user.service';
+import {TracksComponent} from "../tracks/tracks-index.component";
+import {TracksService} from '../entities/tracks.service';
+import {DeezerParsingService} from '../deezer/deezerParsing.service'
 
 @Component({
     selector: 'deezer-dl-app',
@@ -20,6 +23,7 @@ import {CurrentUserService} from '../auth/current-user.service';
         ROUTER_DIRECTIVES,
         HeaderComponent,
         LoggedInRouterOutlet,
+        TracksComponent,
         Alert
     ],
     providers: [
@@ -28,7 +32,9 @@ import {CurrentUserService} from '../auth/current-user.service';
         AuthenticationService,
         ConfigService,
         AlertService,
-        CurrentUserService
+        CurrentUserService,
+        TracksService,
+        DeezerParsingService
     ]
 })
 @RouteConfig([
@@ -45,6 +51,11 @@ import {CurrentUserService} from '../auth/current-user.service';
         name: 'Dashboard',
         component: DashboardComponent,
         useAsDefault: true
+    },
+    {
+        path: '/tracks',
+        name: 'Tracks',
+        component: TracksComponent
     }
 ])
 export class AppComponent {

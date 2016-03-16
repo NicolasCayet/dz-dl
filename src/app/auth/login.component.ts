@@ -52,7 +52,7 @@ export class LoginComponent {
                 type: 'danger',
                 message: 'This application requires a login before continuing.',
                 dismissible: true
-            })
+            });
             this.rememberMe = true;
         }
     }
