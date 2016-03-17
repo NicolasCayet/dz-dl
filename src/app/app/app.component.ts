@@ -2,6 +2,7 @@ import {Component} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {LoginComponent} from '../auth/login.component';
+import {DzLoginComponent} from '../deezer/dzLogin.component';
 import {DashboardComponent} from '../dashboard/dashboard.component';
 import {LoggedInRouterOutlet} from './logged-in-outlet.directive';
 import {AuthenticationService} from '../auth/authentication.service';
@@ -56,6 +57,11 @@ import {DeezerParsingService} from '../deezer/deezerParsing.service'
         path: '/tracks',
         name: 'Tracks',
         component: TracksComponent
+    },
+    {
+        path: '/leginDZ',
+        name: 'DeezerLogin',
+        component: DzLoginComponent
     }
 ])
 export class AppComponent {
