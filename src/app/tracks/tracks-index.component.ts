@@ -27,11 +27,8 @@ export class TracksComponent {
     getTracks(){
         // Deezer IMPL
         if(this.id) {
-            if(this.listType == "album"){
-                this._service.getAlbum(this.id.toString()).then(tracks => this.trackList = tracks);
-            }
-            else if(this.listType == "playlist") {
-                this._service.getPlaylist(this.id.toString()).then(tracks => this.trackList = tracks);
+            if(this.listType){
+                this._service.getTracksByType(this.id.toString(),this.listType).then(tracks => this.trackList = tracks);
             }
         }
     }

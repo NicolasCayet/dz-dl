@@ -10,13 +10,8 @@ export class TracksService {
         private _deezerParsingService: DeezerParsingService
     ) { }
 
-    getPlaylist(id: string){
-        this.list = this._deezerParsingService.getPlaylist(id);
-        return Promise.resolve(this.list);
-    }
-
-    getAlbum(id: string){
-        this.list =  this._deezerParsingService.getAlbum(id);
+    getTracksByType(id: string,containerType: string){
+        this.list = this._deezerParsingService.getTracksByType(id,containerType);
         return Promise.resolve(this.list);
     }
 
