@@ -59,7 +59,7 @@ import {DeezerParsingService} from '../deezer/deezerParsing.service'
         component: TracksComponent
     },
     {
-        path: '/leginDZ',
+        path: '/loginDZ',
         name: 'DeezerLogin',
         component: DzLoginComponent
     }
