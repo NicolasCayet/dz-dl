@@ -15,6 +15,7 @@ import {CurrentUserService} from '../auth/current-user.service';
 import {TracksComponent} from "../tracks/tracks-index.component";
 import {TracksService} from '../entities/tracks.service';
 import {DeezerParsingService} from '../deezer/deezerParsing.service'
+import {DeezerAPIService} from '../deezer/deezerAPI.service'
 
 @Component({
     selector: 'deezer-dl-app',
@@ -35,7 +36,8 @@ import {DeezerParsingService} from '../deezer/deezerParsing.service'
         AlertService,
         CurrentUserService,
         TracksService,
-        DeezerParsingService
+        DeezerParsingService,
+        DeezerAPIService
     ]
 })
 @RouteConfig([

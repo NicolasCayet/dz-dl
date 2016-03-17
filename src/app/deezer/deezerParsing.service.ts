@@ -1,21 +1,31 @@
 import {Injectable} from "angular2/core";
 import {JSONplaylist,JSONalbum} from '../mock/mock-deezerAPI'
 import {Track} from "../entities/track";
+import {DeezerAPIService} from '../deezer/deezerAPI.service'
 
 @Injectable()
 export class DeezerParsingService {
 
     trackList:Track[] = [];
 
+    constructor(
+        private _deezerAPIService: DeezerAPIService
+    ) { }
+
     getPlaylist(id:string) {
-        // TODO need to call deezerAPIService to get the JSON instead of the mocked data
-        this.handleJsonTracks(JSON.stringify(JSONplaylist));
+        this.handleJsonTracks(this._deezerAPIService.getJson("playlist",id));
+
+        // MOCK
+        //this.handleJsonTracks(JSON.stringify(JSONplaylist));
         return this.trackList;
     }
 
     getAlbum(id:string) {
-        // TODO need to call deezerAPIService to get the JSON instead of the mocked data
-        this.handleJsonTracks(JSON.stringify(JSONalbum));
+        this.handleJsonTracks(this._deezerAPIService.getJson("album",id));
+
+        // MOCK
+        //this.handleJsonTracks(JSON.stringify(JSONalbum));
+
         return this.trackList;
     }
 

@@ -5,7 +5,7 @@ import {Track} from "./track";
 @Injectable()
 export class TracksService {
     list:Track[];
-
+    
     constructor(
         private _deezerParsingService: DeezerParsingService
     ) { }
