@@ -135,6 +135,10 @@ gulp.task('serve', function(callback) {
     runSequence('fullbuild', 'browsersync', 'watch', callback);
 });
 
+gulp.task('prod', function(callback) {
+    runSequence('fullbuild', 'browsersync',  callback);
+});
+
 gulp.task('default', function(callback) {
     runSequence('fullbuild', 'watch', callback);
 });
