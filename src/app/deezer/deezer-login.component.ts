@@ -24,11 +24,7 @@ export class DeezerLoginComponent {
             if (response.authResponse) {
                 console.log('Welcome!  Fetching your information.... ');
                 DZ.api('/user/me', function(response) {
-                    this._alertService.pushAlert({
-                        type: 'success',
-                        message: 'You have been connected to your Deezer account (@' + response.name + ')',
-                        dismissible: true
-                    });
+
                     let accJson = {
                         "user_id": response.id,
                         "name": response.name,
@@ -39,6 +35,11 @@ export class DeezerLoginComponent {
                     this._authService.currentUser.account = accJson;
                     console.log('Good to see you, ' + response.name + '.');
                     console.log(this._authService.currentUser.account);
+                    this._alertService.pushAlert({
+                        type: 'success',
+                        message: 'You have been connected to your Deezer account (@' + response.name + ')',
+                        dismissible: true
+                    });
                 });
                 localStorage.setItem("access_token", 'Bearer ' + response.authResponse.accessToken);
                 let expiresAt = DateUtil.timestampSec() + parseInt(response.authResponse.expire);
