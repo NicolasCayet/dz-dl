@@ -1,6 +1,6 @@
 import {Component} from 'angular2/core';
-import {Track} from '../entities/track'
-import {TracksService} from '../entities/tracks.service'
+import {Track} from '../entities/track.entity'
+import {TracksService} from './tracks.service'
 import {HTTP_PROVIDERS} from "angular2/http";
 
 @Component({
@@ -28,7 +28,7 @@ export class TracksComponent {
         // Deezer IMPL
         if(this.id) {
             if(this.listType){
-                this._service.getTracksByType(this.id.toString(),this.listType).then(tracks => this.trackList = tracks);
+                this.trackList = this._service.getTracksByType(this.id.toString(),this.listType);
             }
         }
     }

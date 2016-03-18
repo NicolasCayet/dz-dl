@@ -1,16 +1,15 @@
-import {Http, HTTP_PROVIDERS} from 'angular2/http';
 import {Injectable,OnInit} from "angular2/core";
 import {AlertService} from '../app/alert.service';
+import {Observable} from "rxjs/Observable";
+import {DeezerParsingService} from "./deezerParsing.service";
 
 @Injectable()
 export class DeezerAPIService {
-
-    baseUri: string = "";
-    jsonString: string;
+    json: any;
 
     constructor(
-        public http: Http,
-        private _alertService: AlertService
+        private _alertService: AlertService,
+        private _deezerParsingService: DeezerParsingService
     ) {
         DZ.init({
             appId: '173331',
@@ -20,12 +19,14 @@ export class DeezerAPIService {
 
     getJson(type:string,id:string){
         let uri = this.buildUri(type,id);
-        this.getHttp(uri);
+        let obs = this.getHttp(uri);
+        obs.subscribe(
+                result => this.json = this._deezerParsingService.handleJsonTracks(result),
+                error => {
 
-        console.log("*******************");
-        console.log(this.jsonString);
-        console.log("*******************");
-        return this.jsonString;
+                }
+        );
+        return this.json;
     }
 
     //Exemples
@@ -36,16 +37,21 @@ export class DeezerAPIService {
     }
 
     getHttp(uri:string){
-
-        DZ.api(uri, function(response){
-
-            if (response) {
-                this.jsonString = JSON.stringify(response);
-                console.log("*******************");
-                console.log(JSON.stringify(response));
-                console.log("*******************");
-            }
-
+        return Observable.create(observer => {
+            DZ.api(uri, function(response){
+                try {
+                    if (response.hasOwnProperty('error')) {
+                        console.error(response.error);
+                        observer.error(response.error);
+                    } else {
+                        observer.next(response);
+                    }
+                } catch (e) {
+                    observer.error(e);
+                }
+            });
         });
     }
+
+
 }
