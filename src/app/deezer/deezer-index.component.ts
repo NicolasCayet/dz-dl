@@ -1,20 +1,20 @@
 import {Component} from 'angular2/core';
-import {Track} from '../entities/track.entity'
+import {TrackEntity} from '../entities/track.entity'
 import {TracksService} from '../tracks/tracks.service'
 import {HTTP_PROVIDERS} from "angular2/http";
-import {DeezerParsingService} from "../deezer/deezerParsing.service";
+import {DeezerParsingService} from "./deezer-parsing.service";
 import {SimpleChange} from "angular2/core";
 import {TracksComponent} from "../tracks/tracks-index.component";
 
 @Component({
     selector: 'my-deezer-form',
-    templateUrl: 'app/deezer/deezerIndex.component.html',
-    styleUrls: ['app/deezer/deezerIndex.component.css'],
+    templateUrl: 'app/deezer/deezer-index.component.html',
+    styleUrls: ['app/deezer/deezer-index.component.css'],
     viewProviders: [HTTP_PROVIDERS],
     directives: [TracksComponent]
 })
 export class DeezerIndexComponent {
-    dzTrackList: Track[];
+    dzTrackList: TrackEntity[];
 
     // Deezer playlist/album ID parameters
     id: string;

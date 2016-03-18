@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {Track} from '../entities/track.entity'
+import {TrackEntity} from '../entities/track.entity'
 
 @Component({
     selector: 'my-track-index',
@@ -8,7 +8,7 @@ import {Track} from '../entities/track.entity'
     inputs: ['trackList']
 })
 export class TracksComponent {
-    trackList: Track[];
+    trackList: TrackEntity[];
 }
 
 

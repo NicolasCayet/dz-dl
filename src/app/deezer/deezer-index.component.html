@@ -3,7 +3,7 @@
 <div id="searchBar">
     <p>
         Type
-        <select [(ngModel)]="listType" (change)="updateExempleInput()" >
+        <select [(ngModel)]="listType" (change)="updateExempleInput()">
             <option *ngFor="#container of containerList" [value]="container.value" >{{container.name}}</option>
         </select>
     </p>
