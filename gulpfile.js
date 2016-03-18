@@ -13,18 +13,18 @@ const gulpremote = require('gulp-remote-src');
 
 // Command `clean`
 // clean the contents of the distribution directory
-gulp.task('clean', function () {
-    return del('dist/**/*');
+gulp.task('clean', function (cb) {
+    del('dist/**/*').then(paths => cb());
 });
 // clean only the app directory (containing compiled .ts app files)
-gulp.task('clean:app', function () {
-    return del('dist/app/*');
+gulp.task('clean:app', function (cb) {
+    del('dist/app/*').then(paths => cb());
 });
 
 // Command `copy:assets`
 // copy static assets - i.e. non TypeScript compiled source
-gulp.task('copy:assets', function() {
-    return gulp.src([
+gulp.task('copy:assets', function(cb) {
+    gulp.src([
         'src/app/**/*',
         'src/index.html',
         'src/.htaccess',
@@ -32,11 +32,12 @@ gulp.task('copy:assets', function() {
         'src/deezer-channel-jsonp.html',
         '!src/app/**/*.ts'], {base: "src"})
         .pipe(gulp.dest('dist'))
+        .on('end', cb);
 });
 
 // Command `copy:libs`
 // copy dependencies
-gulp.task('copy:libs', function() {
+gulp.task('copy:libs', function(cb) {
     // download from URL the Deezer JS SDK
     gulpremote(['dz.js'], {base: 'http://e-cdn-files.deezer.com/js/min/'})
         .pipe(gulp.dest('dist/lib'));
@@ -51,7 +52,7 @@ gulp.task('copy:libs', function() {
         .pipe(gulp.dest('dist/lib'));
     /* end of nested-property module load */
 
-    return gulp.src([
+    gulp.src([
             'node_modules/es6-shim/es6-shim.min.js',
             'node_modules/es6-shim/es6-shim.map', // required since upgrade to angular2-beta7
             'node_modules/systemjs/dist/system-polyfills.js',
@@ -69,11 +70,12 @@ gulp.task('copy:libs', function() {
             'node_modules/assert/node_modules/util/node_modules/inherits/inherits_browser.js' // for nested-property Windows loading
         ])
         .pipe(gulp.dest('dist/lib'))
+        .on('end', cb);
 });
 
 // Command `compile`
 // TypeScript compile app/ directory files
-gulp.task('compile', function () {
+gulp.task('compile', function (cb) {
     // prepare and write the app configuration file (per environment)
     var configJson = fs.readFileSync('src/config/local.json');
     fs.writeFileSync('dist/config.js',
@@ -82,25 +84,28 @@ gulp.task('compile', function () {
         ';'
     );
 
-    return gulp.src('**/*.ts', {cwd: 'src'},{base : '.'})
+    gulp.src('**/*.ts', {cwd: 'src'},{base : '.'})
         .pipe(sourcemaps.init())
         .pipe(typescript(tscConfig.compilerOptions))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('build'))
+        .on('end', cb);
 });
 
 // copy content in build/ directory to the dist/ directory
-gulp.task('deploy',function(){
-    return gulp.src('build/src/**/*')
-        .pipe(gulp.dest('dist'));
+gulp.task('deploy',function(cb){
+    gulp.src('build/src/**/*')
+        .pipe(gulp.dest('dist'))
+        .on('end', cb);
 });
 
 // Command `tslint`
 // linting code within app/ directory
-gulp.task('tslint', function() {
-    return gulp.src('src/app/**/*.ts')
+gulp.task('tslint', function(cb) {
+    gulp.src('src/app/**/*.ts')
         .pipe(tslint())
-        .pipe(tslint.report('verbose'));
+        .pipe(tslint.report('verbose'))
+        .on('end', cb);
 });
 
 gulp.task('browsersync', function() {
@@ -114,11 +119,11 @@ gulp.task('browsersync', function() {
 gulp.task('watch', function() {
     gulp.watch(['src/index.html', "src/app/**/*.{html,htm,css,js}"], function() {
         browserSync.active ? runSequence('copy:assets', browserSync.reload) : gulp.run('copy:assets');
-    });
-    return gulp.watch(['src/**/*.ts'], function() {
+    })
+    gulp.watch(['src/**/*.ts'], function() {
         browserSync.active ?
-            runSequence('compile', 'clean:app', 'deploy', 'copy:assets', browserSync.reload) :
-            runSequence('compile', 'clean:app', 'deploy', 'copy:assets');
+            runSequence('compile', 'deploy', browserSync.reload) :
+            runSequence('compile', 'deploy');
     });
 });
 

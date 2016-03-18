@@ -4,5 +4,5 @@
 npm-debug.log
 .idea
 DeezerDL.iml
-typings/*
-!typings/README.md
+/typings/
+!/src/typings/README.md
