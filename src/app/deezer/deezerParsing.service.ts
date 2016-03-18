@@ -1,13 +1,12 @@
 import {Injectable} from "angular2/core";
-import {JSONplaylist,JSONalbum} from '../mock/mock-deezerAPI'
 import {Track} from "../entities/track.entity";
 
 @Injectable()
 export class DeezerParsingService {
 
     trackList:Track[];
-    json:any;
     track: Track;
+
     constructor() {
         this.trackList = [];
     }

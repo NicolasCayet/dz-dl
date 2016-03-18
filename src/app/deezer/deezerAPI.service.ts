@@ -1,16 +1,11 @@
 import {Injectable,OnInit} from "angular2/core";
-import {AlertService} from '../app/alert.service';
 import {Observable} from "rxjs/Observable";
-import {DeezerParsingService} from "./deezerParsing.service";
 
 @Injectable()
 export class DeezerAPIService {
     json: any;
 
-    constructor(
-        private _alertService: AlertService,
-        private _deezerParsingService: DeezerParsingService
-    ) {
+    constructor() {
         DZ.init({
             appId: '173331',
             channelUrl: location.origin + '/deezer-channel-jsonp.html'
@@ -18,15 +13,7 @@ export class DeezerAPIService {
     }
 
     getJson(type:string,id:string){
-        let uri = this.buildUri(type,id);
-        let obs = this.getHttp(uri);
-        obs.subscribe(
-                result => this.json = this._deezerParsingService.handleJsonTracks(result),
-                error => {
-
-                }
-        );
-        return this.json;
+        return this.getHttp(this.buildUri(type,id));
     }
 
     //Exemples

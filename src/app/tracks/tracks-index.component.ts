@@ -2,6 +2,7 @@ import {Component} from 'angular2/core';
 import {Track} from '../entities/track.entity'
 import {TracksService} from './tracks.service'
 import {HTTP_PROVIDERS} from "angular2/http";
+import {DeezerParsingService} from "../deezer/deezerParsing.service";
 
 @Component({
     selector: 'my-dashboard',
@@ -16,8 +17,11 @@ export class TracksComponent {
     id: string;
     listType: string;
 
+
     constructor(
-        private _service:TracksService)
+        private _service:TracksService,
+        private _deezerParsingService: DeezerParsingService
+    )
     {}
 
     fetchTracks(){
@@ -28,7 +32,13 @@ export class TracksComponent {
         // Deezer IMPL
         if(this.id) {
             if(this.listType){
-                this.trackList = this._service.getTracksByType(this.id.toString(),this.listType);
+                let obs = this._service.getTracksByType(this.id.toString(),this.listType);
+                obs.subscribe(
+                    result => this.trackList = this._deezerParsingService.handleJsonTracks(result),
+                    error => {
+
+                    }
+                );
             }
         }
     }
