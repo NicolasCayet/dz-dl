@@ -12,7 +12,7 @@ export class TracksService {
     ) { }
 
     getTracksByType(id: string,containerType: string){
-        return this._deezerAPIService.getJson(containerType,id);
+        return this._deezerAPIService.getTracks(containerType,id);
     }
 
 }
