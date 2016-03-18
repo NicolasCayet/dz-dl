@@ -5,6 +5,7 @@ import {HTTP_PROVIDERS} from "angular2/http";
 import {DeezerParsingService} from "./deezer-parsing.service";
 import {SimpleChange} from "angular2/core";
 import {TracksComponent} from "../tracks/tracks-index.component";
+import {OnInit} from 'angular2/core';
 
 @Component({
     selector: 'my-deezer-form',
@@ -13,12 +14,12 @@ import {TracksComponent} from "../tracks/tracks-index.component";
     viewProviders: [HTTP_PROVIDERS],
     directives: [TracksComponent]
 })
-export class DeezerIndexComponent {
+export class DeezerIndexComponent implements OnInit {
     dzTrackList: TrackEntity[];
 
     // Deezer playlist/album ID parameters
     id: string;
-    listType: string;
+    listType: string = "playlist";
 
     exempleByType: any;
 
@@ -32,7 +33,7 @@ export class DeezerIndexComponent {
         ],
         //Albums
         [
-            {name: "ANTI par Rihanna", id:"12279700"},
+            {name: "ANTI par TROLL", id:"12279700"},
             {name: "Drones par Muse", id:"10506072"},
             {name: "Tetra par C2C", id:"5302151"}
         ]
@@ -49,6 +50,10 @@ export class DeezerIndexComponent {
         private _deezerParsingService: DeezerParsingService
     )
     {}
+
+    ngOnInit() {
+        this.updateExempleInput(this.listType);
+    }
 
     fetchTracks(){
         this.getTracks();
@@ -69,13 +74,12 @@ export class DeezerIndexComponent {
         }
     }
 
-    updateExempleInput(){
-        if (this.listType == "playlist"){
+    updateExempleInput(event){
+        if (event == "playlist"){
             this.exempleByType = this.exemplesList[0];
         }
-        else if(this.listType == "album") {
+        else if(event == "album") {
             this.exempleByType = this.exemplesList[1];
         }
-
     }
 }
