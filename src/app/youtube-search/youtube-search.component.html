@@ -1,0 +1,6 @@
+<ul>
+    <li *ngFor="#result of searchResults">
+        <img *ngIf="result.smallImageUri" src="{{ result.smallImageUri }}" />
+        <label>Video #{{ result.videoId }}:</label> {{ result.title }}
+    </li>
+</ul>

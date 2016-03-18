@@ -17,6 +17,8 @@ import {TracksService} from '../tracks/tracks.service';
 import {DeezerParsingService} from '../deezer/deezer-parsing.service';
 import {DeezerAPIService} from '../deezer/deezer-API.service';
 import {DeezerIndexComponent} from "../deezer/deezer-index.component";
+import {YoutubeSearchService} from '../youtube-search/youtube-search.service';
+import {YoutubeSearchComponent} from '../youtube-search/youtube-search.component';
 
 @Component({
     selector: 'deezer-dl-app',
@@ -38,7 +40,8 @@ import {DeezerIndexComponent} from "../deezer/deezer-index.component";
         CurrentUserService,
         TracksService,
         DeezerParsingService,
-        DeezerAPIService
+        DeezerAPIService,
+        YoutubeSearchService
     ]
 })
 @RouteConfig([
@@ -65,6 +68,11 @@ import {DeezerIndexComponent} from "../deezer/deezer-index.component";
         path: '/loginDZ',
         name: 'DeezerLogin',
         component: DeezerLoginComponent
+    },
+    {
+        path: '/youtube-search',
+        name: 'YoutubeSearch',
+        component: YoutubeSearchComponent
     }
 ])
 export class AppComponent {
