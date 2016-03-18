@@ -34,8 +34,7 @@
                                     {{ authService.currentUser.nickname }} #{{ authService.currentUser.id }}
                                 </dd>
                                 <dd *ngIf="authService.currentUser.account && authService.currentUser.account.user_id ">
-                                    Deezer: {{ authService.currentUser.account.name }}
-                                    Deezer ID: {{ authService.currentUser.account.user_id }}
+                                    {{ authService.currentUser.account.name }} #{{ authService.currentUser.account.user_id }}
                                 </dd>
                                 <dd>
                                     <a href="#">Your account</a>
