@@ -2,15 +2,20 @@
 
 <div id="searchBar">
     <p>
-        Identifiant
-        <input [(ngModel)]="id" placeholder="id"/>
+        Type
+        <select [(ngModel)]="listType" (change)="updateExempleInput()" >
+            <option *ngFor="#container of containerList" [value]="container.value" >{{container.name}}</option>
+        </select>
     </p>
     <p>
-        Type
-        <select [(ngModel)]="listType">
-            <option  value="playlist" selected>Playlist</option>
-            <option value="album">Album</option>
+        Exemple:
+        <select [(ngModel)]="id">
+            <option *ngFor="#exemple of exempleByType" [value]="exemple.id" >{{exemple.name}}</option>
         </select>
+    </p>
+    <p>
+        Identifiant
+        <input [(ngModel)]="id" placeholder="id"/>
     </p>
     <p>
         <button (click)="fetchTracks()">Fetch</button>
