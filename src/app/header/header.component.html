@@ -28,12 +28,13 @@
                         <div class="container-fluid" id="profile-excerpt">
                             <dl>
                                 <dd>
-                                    <img *ngIf="authService.currentUser.picture_small" src="{{authService.currentUser.picture_small}}" />
+                                    <img *ngIf="authService.currentUser.account.picture_small" src="{{authService.currentUser.picture_small}}" />
+                                    <img *ngIf="!authService.currentUser.account.picture_small && authService.currentUser.picture_small" src="{{authService.currentUser.picture_small}}" />
                                 </dd>
                                 <dd>
                                     {{ authService.currentUser.nickname }} #{{ authService.currentUser.id }}
                                 </dd>
-                                <dd *ngIf="authService.currentUser.account">
+                                <dd *ngIf="authService.currentUser.account && authService.currentUser.account.user_id ">
                                     Deezer: {{ authService.currentUser.account.name }}
                                     Deezer ID: {{ authService.currentUser.account.user_id }}
                                 </dd>
