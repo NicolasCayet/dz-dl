@@ -1,4 +1,4 @@
-export interface Track {
+export interface TrackEntity {
         id: number;
         title: string;
         duration: number;

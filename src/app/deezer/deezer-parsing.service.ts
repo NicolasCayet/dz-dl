@@ -1,11 +1,11 @@
 import {Injectable} from "angular2/core";
-import {Track} from "../entities/track.entity";
+import {TrackEntity} from "../entities/track.entity";
 
 @Injectable()
 export class DeezerParsingService {
 
-    trackList:Track[];
-    track: Track;
+    trackList:TrackEntity[];
+    track: TrackEntity;
 
     constructor() {
         this.trackList = [];

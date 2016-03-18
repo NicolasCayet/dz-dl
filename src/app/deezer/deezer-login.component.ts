@@ -6,9 +6,9 @@ import {AlertService} from '../app/alert.service';
 
 @Component({
     selector: 'login',
-    templateUrl: 'app/deezer/dzLogin.component.html'
+    templateUrl: 'app/deezer/deezer-login.component.html'
 })
-export class DzLoginComponent {
+export class DeezerLoginComponent {
 
     constructor(private _authService: AuthenticationService, private _alertService: AlertService, router: Router) {
         DZ.init({

@@ -2,7 +2,7 @@ import {Component} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {LoginComponent} from '../auth/login.component';
-import {DzLoginComponent} from '../deezer/dzLogin.component';
+import {DeezerLoginComponent} from '../deezer/deezer-login.component';
 import {DashboardComponent} from '../dashboard/dashboard.component';
 import {LoggedInRouterOutlet} from './logged-in-outlet.directive';
 import {AuthenticationService} from '../auth/authentication.service';
@@ -14,8 +14,9 @@ import {HeaderComponent} from '../header/header.component';
 import {CurrentUserService} from '../auth/current-user.service';
 import {TracksComponent} from "../tracks/tracks-index.component";
 import {TracksService} from '../tracks/tracks.service';
-import {DeezerParsingService} from '../deezer/deezerParsing.service'
-import {DeezerAPIService} from '../deezer/deezerAPI.service'
+import {DeezerParsingService} from '../deezer/deezer-parsing.service';
+import {DeezerAPIService} from '../deezer/deezer-API.service';
+import {DeezerIndexComponent} from "../deezer/deezer-index.component";
 
 @Component({
     selector: 'deezer-dl-app',
@@ -56,14 +57,14 @@ import {DeezerAPIService} from '../deezer/deezerAPI.service'
         useAsDefault: true
     },
     {
-        path: '/tracks',
-        name: 'Tracks',
-        component: TracksComponent
+        path: '/dzTracks',
+        name: 'DzTracks',
+        component: DeezerIndexComponent
     },
     {
         path: '/loginDZ',
         name: 'DeezerLogin',
-        component: DzLoginComponent
+        component: DeezerLoginComponent
     }
 ])
 export class AppComponent {

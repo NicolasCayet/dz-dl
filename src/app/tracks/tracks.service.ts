@@ -1,7 +1,7 @@
 import {Injectable,OnInit} from "angular2/core";
 
-import {Track} from "../entities/track.entity";
-import {DeezerAPIService} from "../deezer/deezerAPI.service";
+import {TrackEntity} from "../entities/track.entity";
+import {DeezerAPIService} from "../deezer/deezer-API.service";
 
 @Injectable()
 export class TracksService {
