@@ -19,11 +19,11 @@ export class DeezerLoginComponent {
     }
 
     onLoginClick() {
-        DZ.login(function(response) {
-            console.dir(response);
-            if (response.authResponse) {
+        DZ.login(responseL => {
+            console.dir(responseL);
+            if (responseL.authResponse) {
                 console.log('Welcome!  Fetching your information.... ');
-                DZ.api('/user/me', function(response) {
+                DZ.api('/user/me', response => {
 
                     let accJson = {
                         "user_id": response.id,
@@ -41,8 +41,8 @@ export class DeezerLoginComponent {
                         dismissible: true
                     });
                 });
-                localStorage.setItem("access_token", 'Bearer ' + response.authResponse.accessToken);
-                let expiresAt = DateUtil.timestampSec() + parseInt(response.authResponse.expire);
+                localStorage.setItem("access_token", 'Bearer ' + responseL.authResponse.accessToken);
+                let expiresAt = DateUtil.timestampSec() + parseInt(responseL.authResponse.expire);
                 localStorage.setItem("access_token_expires_at", "" + expiresAt);
             } else {
                 console.log('User cancelled login or did not fully authorize.');
