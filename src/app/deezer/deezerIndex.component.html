@@ -1,0 +1,24 @@
+<h3>Fetch a playlist or an album</h3>
+
+<div id="searchBar">
+    <p>
+        Type
+        <select [(ngModel)]="listType" (change)="updateExempleInput()" >
+            <option *ngFor="#container of containerList" [value]="container.value" >{{container.name}}</option>
+        </select>
+    </p>
+    <p>
+        Exemple:
+        <select [(ngModel)]="id">
+            <option *ngFor="#exemple of exempleByType" [value]="exemple.id" >{{exemple.name}}</option>
+        </select>
+    </p>
+    <p>
+        Identifiant
+        <input [(ngModel)]="id" placeholder="id"/>
+    </p>
+    <p>
+        <button (click)="fetchTracks()">Fetch</button>
+    </p>
+</div>
+<my-track-index [trackList]="dzTrackList"></my-track-index>

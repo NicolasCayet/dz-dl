@@ -1,27 +1,4 @@
-<h3>Fetch a playlist or an album</h3>
-
-<div id="searchBar">
-    <p>
-        Type
-        <select [(ngModel)]="listType" (change)="updateExempleInput()" >
-            <option *ngFor="#container of containerList" [value]="container.value" >{{container.name}}</option>
-        </select>
-    </p>
-    <p>
-        Exemple:
-        <select [(ngModel)]="id">
-            <option *ngFor="#exemple of exempleByType" [value]="exemple.id" >{{exemple.name}}</option>
-        </select>
-    </p>
-    <p>
-        Identifiant
-        <input [(ngModel)]="id" placeholder="id"/>
-    </p>
-    <p>
-        <button (click)="fetchTracks()">Fetch</button>
-    </p>
-</div>
-<div id="tracksContainer">
+<div id="tracksContainer" *ngIf="trackList">
     <div id="leftGrid" class="grid grid-pad" >
         <div *ngFor="#track of trackList"  class="trackItem col-1-4" >
                 <h4>{{track.artistName + ": " + track.title +" : " + track.duration + " sec." }}</h4>

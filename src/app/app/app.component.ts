@@ -16,6 +16,7 @@ import {TracksComponent} from "../tracks/tracks-index.component";
 import {TracksService} from '../tracks/tracks.service';
 import {DeezerParsingService} from '../deezer/deezerParsing.service'
 import {DeezerAPIService} from '../deezer/deezerAPI.service'
+import {DeezerIndexComponent} from "../deezer/deezerIndex.component";
 
 @Component({
     selector: 'deezer-dl-app',
@@ -56,9 +57,9 @@ import {DeezerAPIService} from '../deezer/deezerAPI.service'
         useAsDefault: true
     },
     {
-        path: '/tracks',
-        name: 'Tracks',
-        component: TracksComponent
+        path: '/dzTracks',
+        name: 'DzTracks',
+        component: DeezerIndexComponent
     },
     {
         path: '/loginDZ',
