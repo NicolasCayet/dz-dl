@@ -6,3 +6,4 @@ npm-debug.log
 DeezerDL.iml
 /typings/
 !/src/typings/README.md
+/src/config/*
