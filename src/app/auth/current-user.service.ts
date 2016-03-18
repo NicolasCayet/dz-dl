@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {CurrentUserEntity} from './current-user.entity';
+import {CurrentUserEntity} from './current-user.entity.ts';
 
 const REMEMBERED_ID_KEY = 'rememberedId';
 
@@ -8,7 +8,7 @@ export class CurrentUserService {
     private fakeUser: CurrentUserEntity = {
         id: 1,
         nickname: 'toto',
-        picture_small: null
+        account:null
     };
 
     getById(id: number): Promise<CurrentUserEntity> {

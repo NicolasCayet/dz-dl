@@ -3,6 +3,7 @@ import {AuthenticationService} from '../auth/authentication.service';
 import {Router} from 'angular2/router';
 import {DateUtil} from '../common/date.util';
 import {AlertService} from '../app/alert.service';
+import {AccountEntity} from "../entities/account.entity";
 
 @Component({
     selector: 'login',
@@ -28,7 +29,16 @@ export class DeezerLoginComponent {
                         message: 'You have been connected to your Deezer account (@' + response.name + ')',
                         dismissible: true
                     });
+                    let accJson = {
+                        "user_id": response.id,
+                        "name": response.name,
+                        "picture_small": response.picture_small,
+                        "picture_medium": response.picture_medium,
+                        "picture_big": response.picture_big
+                    }
+                    this._authService.currentUser.account = accJson;
                     console.log('Good to see you, ' + response.name + '.');
+                    console.log(this._authService.currentUser.account);
                 });
                 localStorage.setItem("access_token", 'Bearer ' + response.authResponse.accessToken);
                 let expiresAt = DateUtil.timestampSec() + parseInt(response.authResponse.expire);
