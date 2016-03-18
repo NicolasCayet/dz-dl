@@ -28,8 +28,7 @@
                         <div class="container-fluid" id="profile-excerpt">
                             <dl>
                                 <dd *ngIf="authService.currentUser.account && authService.currentUser.account.picture_small">
-                                    {{authService.currentUser.picture_small}}
-                                    <img src="{{authService.currentUser.picture_small}}" >
+                                    <img src="{{authService.currentUser.account.picture_small}}" >
                                 </dd>
                                 <dd>
                                     {{ authService.currentUser.nickname }} #{{ authService.currentUser.id }}
