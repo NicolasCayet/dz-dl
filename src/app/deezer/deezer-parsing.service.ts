@@ -1,6 +1,7 @@
 import {Injectable} from "angular2/core";
 import {TrackEntity} from "../entities/track.entity";
 import {ContainerEntity} from "../entities/container.entity";
+import js = webdriver.By.js;
 
 @Injectable()
 export class DeezerParsingService {
@@ -66,7 +67,8 @@ export class DeezerParsingService {
            picture_medium:jsonContainer.picture_medium,
            picture_big: jsonContainer.picture_big,
            duration: jsonContainer.duration,
-           nb_tracks: jsonContainer.nb_tracks
+           nb_tracks: jsonContainer.nb_tracks,
+           artist_name: ""
         }
     }
 
@@ -80,7 +82,8 @@ export class DeezerParsingService {
             picture_medium:jsonContainer.cover_medium,
             picture_big: jsonContainer.cover_big,
             duration: jsonContainer.duration,
-            nb_tracks: jsonContainer.nb_tracks
+            nb_tracks: jsonContainer.nb_tracks,
+            artist_name: jsonContainer.artist.name
         }
     }
 

@@ -7,5 +7,6 @@ export interface ContainerEntity {
     picture_medium:string,
     picture_big: string,
     duration: number,
-    nb_tracks: number
+    nb_tracks: number,
+    artist_name: string
 }
