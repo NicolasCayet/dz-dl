@@ -36,7 +36,6 @@ export class DeezerLoginComponent {
                     }
                     this._authService.currentUser.account = accJson;
                     console.log('Good to see you, ' + response.name + '.');
-                    console.log(this._authService.currentUser.account);
 
                     if(response && response.name){
                         typeS  = "success";
@@ -45,8 +44,6 @@ export class DeezerLoginComponent {
                          typeS = "danger";
                          msgS = 'Connection failure: User cancelled login or did not fully authorize.';
                     }
-
-
                 });
                 localStorage.setItem("access_token", 'Bearer ' + responseL.authResponse.accessToken);
                 let expiresAt = DateUtil.timestampSec() + parseInt(responseL.authResponse.expire);
@@ -58,11 +55,13 @@ export class DeezerLoginComponent {
             }
         }, {perms: 'basic_access,email'});
 
-        this._alertService.pushAlert({
-            type: typeS,
-            message: msgS,
-            dismissible: true
-        });
+        if(typeS != "" && msgS != ""){
+            this._alertService.pushAlert({
+                type: typeS,
+                message: msgS,
+                dismissible: true
+            });
+        }
     }
 
 }
