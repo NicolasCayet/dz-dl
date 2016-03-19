@@ -64,7 +64,7 @@ export class DeezerIndexComponent implements OnInit {
 
     ngOnInit() {
 
-        this.updateExempleInput(this.listType);
+        this.updateExempleInput("playlist");
         this.getAlbums();
         this.getPLaylists();
         if(!this.authService.currentUser.account){
@@ -84,6 +84,9 @@ export class DeezerIndexComponent implements OnInit {
         // Deezer IMPL
         if(this.id) {
             if(this.listType){
+                console.log("getTracks");
+                console.log(this.listType);
+                console.log("getTracks");
                 let obs = this._service.getTracksByType(this.id.toString(),this.listType);
                 obs.subscribe(
                     result => {
@@ -128,7 +131,10 @@ export class DeezerIndexComponent implements OnInit {
     }
 
     updateExempleInput(event){
+        console.log("updateExempleInput");
         console.log(event.toString());
+        console.log("updateExempleInput");
+        this.listType = event;
         if (event == "playlist"){
             this.exempleByType = this.exemplesList[0];
         }
@@ -139,8 +145,8 @@ export class DeezerIndexComponent implements OnInit {
 
     updateAlbumInput(event){
         console.log("updateAlbumInput");
-        console.log(event.toString());
         console.log(event);
+        console.log("updateAlbumInput");
         if (event){
             //this.currentContainer=event;
             this.id = event;
@@ -149,6 +155,9 @@ export class DeezerIndexComponent implements OnInit {
     }
 
     updatePlaylistInput(event){
+        console.log("updatePlaylistInput");
+        console.log(event);
+        console.log("updatePlaylistInput");
         if (event){
            // this.currentContainer=event;
             this.id = event;
