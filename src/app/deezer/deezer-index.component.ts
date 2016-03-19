@@ -6,6 +6,8 @@ import {DeezerParsingService} from "./deezer-parsing.service";
 import {SimpleChange} from "angular2/core";
 import {TracksComponent} from "../tracks/tracks-index.component";
 import {OnInit} from 'angular2/core';
+import {AuthenticationService} from "../auth/authentication.service";
+import {ContainerEntity} from "../entities/container.entity";
 
 @Component({
     selector: 'my-deezer-form',
@@ -16,6 +18,8 @@ import {OnInit} from 'angular2/core';
 })
 export class DeezerIndexComponent implements OnInit {
     dzTrackList: TrackEntity[];
+    dzPlaylists: ContainerEntity[];
+    dzAlbums: ContainerEntity[];
 
     // Deezer playlist/album ID parameters
     id: string;
@@ -47,12 +51,15 @@ export class DeezerIndexComponent implements OnInit {
 
     constructor(
         private _service:TracksService,
-        private _deezerParsingService: DeezerParsingService
+        private _deezerParsingService: DeezerParsingService,
+        private authService: AuthenticationService
     )
     {}
 
     ngOnInit() {
         this.updateExempleInput(this.listType);
+       // this.getAlbums();
+       // this.getPLaylists();
     }
 
     fetchTracks(){
@@ -65,12 +72,42 @@ export class DeezerIndexComponent implements OnInit {
             if(this.listType){
                 let obs = this._service.getTracksByType(this.id.toString(),this.listType);
                 obs.subscribe(
-                    result => this.dzTrackList = this._deezerParsingService.handleJsonTracks(result),
-                    error => {
+                    result => {
+                        this.dzTrackList = this._deezerParsingService.handleJsonTracks(result);
+                    },
+                     error => {
 
-                    }
+                     }
                 );
             }
+        }
+    }
+
+    getPLaylists(){
+        if(this.authService.currentUser.account && this.authService.currentUser.account.user_id){
+            let obs = this._service.getDeezerPlaylists(this.authService.currentUser.account.user_id.toString());
+            obs.subscribe(
+                result => {
+                    this.dzAlbums = this._deezerParsingService.handleJsonContainer(result,"playlist");
+                },
+                error => {
+
+                }
+            );
+        }
+    }
+
+    getAlbums(){
+        if(this.authService.currentUser.account && this.authService.currentUser.account.user_id){
+            let obs = this._service.getDeezerAlbums(this.authService.currentUser.account.user_id.toString());
+            obs.subscribe(
+                result => {
+                    this.dzPlaylists = this._deezerParsingService.handleJsonContainer(result,"album");;
+                },
+                error => {
+
+                }
+            );
         }
     }
 

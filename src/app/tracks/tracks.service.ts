@@ -15,4 +15,12 @@ export class TracksService {
         return this._deezerAPIService.getTracks(containerType,id);
     }
 
+    getDeezerAlbums(id:string){
+        return this._deezerAPIService.getAlbums(id);
+    }
+
+    getDeezerPlaylists(id:string){
+        return this._deezerAPIService.getPlaylists(id);
+    }
+
 }

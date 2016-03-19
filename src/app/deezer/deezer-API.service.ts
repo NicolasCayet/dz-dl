@@ -16,14 +16,12 @@ export class DeezerAPIService {
         return this.getHttp(this.buildTracksUri(type,id));
     }
 
-    getPlaylistsList(){
-        let userId = ""; // currentUserEntity
-        this.getHttp(this.buildTracksUri(userId,"playlists"));
+    getPlaylists(userId:string){
+        return this.getHttp(this.buildTracksUri(userId,"playlists"));
     }
 
-    getAlbums(){
-        let userId = ""; // currentUserEntity
-        this.getHttp(this.buildTracksUri(userId,"albums"));
+    getAlbums(userId:string){
+        return this.getHttp(this.buildTracksUri(userId,"albums"));
     }
 
     //Exemples

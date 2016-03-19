@@ -1,6 +1,7 @@
 <h3>Fetch a playlist or an album</h3>
 
 <div id="searchBar">
+    <div>
     <p>
         Type
         <select [ngModel]="listType" (ngModelChange)="updateExempleInput($event)">
@@ -20,5 +21,12 @@
     <p>
         <button (click)="fetchTracks()">Fetch</button>
     </p>
+    </div>
+    <div *ngIf="authService.currentUser.account.name">
+
+        {{dzPlaylists}}
+        {{dzAlbums}}
+
+    </div>
 </div>
 <my-track-index [trackList]="dzTrackList"></my-track-index>
