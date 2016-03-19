@@ -1,6 +1,4 @@
 <div id="containerBadge" *ngIf="container">
-    <p>
-        <h1>{{container.type}}: {{container.title}}, {{ container.nb_tracks }} tracks, duration: {{container.duration/60}}min.</h1>
-    </p>
+        <h1>{{container.type}}: {{container.title}}, {{ container.nb_tracks }} tracks, duration: {{container.duration}} sec.</h1>
     <img src="{{currentContainer.picture_medium}}" >
 </div>
