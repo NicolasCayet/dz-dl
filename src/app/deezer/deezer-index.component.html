@@ -2,25 +2,22 @@
 
 <div id="searchBar">
     <div>
-    <p>
-        Type
-        <select [ngModel]="listType" (ngModelChange)="updateExempleInput($event)">
-            <option *ngFor="#container of containerList" [value]="container.value" >{{container.name}}</option>
-        </select>
-    </p>
-    <p>
-        Exemple:
-        <select [(ngModel)]="id">
-            <option *ngFor="#exemple of exempleByType" [value]="exemple.id" >{{exemple.name}}</option>
-        </select>
-    </p>
-    <p>
-        Identifiant
-        <input [(ngModel)]="id" placeholder="id"/>
-    </p>
-    <p>
-        <button (click)="fetchTracks()">Fetch</button>
-    </p>
+        <p>
+            <my-container-display [container]="currentContainer"></my-container-display>
+        </p>
+        <p>
+            Type
+            <select [ngModel]="listType" (ngModelChange)="updateExempleInput($event)">
+                <option *ngFor="#container of containerList" [value]="container.value" >{{container.name}}</option>
+            </select>
+        </p>
+        <p>
+            Identifiant
+            <input [(ngModel)]="id" placeholder="id"/>
+        </p>
+        <p>
+            <button (click)="fetchTracks()">Fetch</button>
+        </p>
     </div>
     <div *ngIf="authService.currentUser.account">
 
@@ -38,5 +35,4 @@
     </p>
     </div>
 </div>
-<my-container-display [container]="currentContainer"></my-container-display>
 <my-track-index [trackList]="dzTrackList"></my-track-index>

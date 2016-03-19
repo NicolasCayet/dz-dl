@@ -30,29 +30,6 @@ export class DeezerIndexComponent implements OnInit {
     currentPlaylistInput: ContainerEntity;
     currentContainer: ContainerEntity;
 
-    exempleByType: any;
-
-    // Not suppose to stay here
-    exemplesList: any[][] = [
-        //Playlists
-        [
-            {name: "Découvertes", id:"1389164505"},
-            {name: "Chill - Relax", id:"1290316405"},
-            {name: "Deezer Hits", id:"1363560485"}
-        ],
-        //Albums
-        [
-            {name: "ANTI par TROLL", id:"12279700"},
-            {name: "Drones par Muse", id:"10506072"},
-            {name: "Tetra par C2C", id:"5302151"}
-        ]
-    ];
-
-    // Not suppose to stay here
-    containerList: any[] = [
-        {name:"Playlist",value:"playlist"},
-        {name:"Album",value:"album"}
-    ];
 
     constructor(
         private _service:TracksService,
@@ -63,8 +40,6 @@ export class DeezerIndexComponent implements OnInit {
     {}
 
     ngOnInit() {
-
-        this.updateExempleInput("playlist");
         this.getAlbums();
         this.getPLaylists();
         if(!this.authService.currentUser.account){
@@ -127,16 +102,6 @@ export class DeezerIndexComponent implements OnInit {
         }
     }
 
-    updateExempleInput(event){
-        this.listType = event;
-        if (event == "playlist"){
-            this.exempleByType = this.exemplesList[0];
-        }
-        else if(event == "album") {
-            this.exempleByType = this.exemplesList[1];
-        }
-    }
-
     updateAlbumInput(event){
         if (event){
             this.currentContainer= this.findContainerByidAndType(event,"album");
@@ -157,9 +122,6 @@ export class DeezerIndexComponent implements OnInit {
         let list = type == "album" ?  this.dzAlbums : this.dzPlaylists;
         for (let cont of list){
             if(cont.id.toString() == id){
-                console.log("findContainerByidAndType")
-                console.log(cont);
-                console.log("findContainerByidAndType")
                 return cont;
             }
         }
