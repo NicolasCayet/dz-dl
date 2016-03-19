@@ -4,8 +4,8 @@ import {ContainerEntity} from "../entities/container.entity";
 
 @Component({
     selector: 'my-container-display',
-    templateUrl: 'app/tracks/container-display.component.html',
-    styleUrls: ['app/tracks/container-display.component.css'],
+    templateUrl: 'app/container/container-display.component.html',
+    styleUrls: ['app/container/container-display.component.css'],
     inputs: ['container']
 })
 export class ContainerDisplayComponent {
