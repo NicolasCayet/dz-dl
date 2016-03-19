@@ -128,7 +128,7 @@ export class DeezerIndexComponent implements OnInit {
     }
 
     updateExempleInput(event){
-        console.log(event.tostring());
+        console.log(event.toString());
         if (event == "playlist"){
             this.exempleByType = this.exemplesList[0];
         }
