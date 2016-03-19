@@ -137,8 +137,8 @@ export class DeezerIndexComponent implements OnInit {
     }
 
     updateContainerInput(event){
-        console.log(event);
-        console.log(event.id);
+        console.log(JSON.stringify(event));
+        console.log(JSON.parse(event).id);
         console.log(event.type);
         if (event){
             this.currentContainer=event;
