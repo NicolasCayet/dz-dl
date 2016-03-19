@@ -38,5 +38,9 @@
     </p>
     </div>
 </div>
+<div id="containerBadge" *ngIf="currentContainer">
+    {{currentContainer.type}}: {{currentContainer.title}}, {{ currentContainer.nb_tracks }} tracks, duration: {{currentContainer.duration}}
+    <img src="{{currentContainer.picture_medium}}" >
+</div>
 <my-container-display [container]="currentContainer"></my-container-display>
 <my-track-index [trackList]="dzTrackList"></my-track-index>
