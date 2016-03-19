@@ -111,6 +111,7 @@ export class DeezerIndexComponent implements OnInit {
             this.currentContainer= this.findContainerByidAndType(event,"album");
             this.id = event;
             this.listType = "album";
+            this.fetchTracks();
         }
     }
 
@@ -119,6 +120,7 @@ export class DeezerIndexComponent implements OnInit {
             this.currentContainer= this.findContainerByidAndType(event,"playlist");
             this.id = event;
             this.listType = "playlist";
+            this.fetchTracks();
         }
     }
 
