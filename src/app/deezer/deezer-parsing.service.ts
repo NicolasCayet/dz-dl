@@ -81,7 +81,7 @@ export class DeezerParsingService {
             picture_small:jsonContainer.cover_small,
             picture_medium:jsonContainer.cover_medium,
             picture_big: jsonContainer.cover_big,
-            duration: jsonContainer.duration,
+            duration: "",
             nb_tracks: jsonContainer.nb_tracks,
             artist_name: jsonContainer.artist.name
         }
