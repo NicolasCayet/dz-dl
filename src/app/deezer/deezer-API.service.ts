@@ -38,6 +38,8 @@ export class DeezerAPIService {
     }
 
     getHttp(uri:string){
+        console.log("GetHTTP URI =>");
+        console.log(uri);
         return Observable.create(observer => {
             DZ.api(uri, function(response){
                 try {
