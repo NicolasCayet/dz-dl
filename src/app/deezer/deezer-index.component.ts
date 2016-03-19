@@ -137,13 +137,25 @@ export class DeezerIndexComponent implements OnInit {
         }
     }
 
-    updateContainerInput(event){
+    updateAlbumInput(event){
+        console.log("updateAlbumInput");
         console.log(event.toString());
-        console.log(event.type);
+        console.log(event);
         if (event){
-            this.currentContainer=event;
-            this.id = event.id;
-            this.listType = event.type;
+            //this.currentContainer=event;
+            this.id = event;
+            this.listType = "album";
+        }
+    }
+
+    updatePlaylistInput(event){
+        console.log("updatePlaylistInput");
+        console.log(event.toString());
+        console.log(event);
+        if (event){
+           // this.currentContainer=event;
+            this.id = event;
+            this.listType = "playlist";
         }
     }
 }

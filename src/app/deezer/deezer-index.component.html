@@ -26,14 +26,14 @@
 
     <p *ngIf="dzAlbums">
         Albums
-        <select [ngModel]="currentAlbumInput" (ngModelChange)="updateContainerInput($event)">
-            <option *ngFor="#album of dzAlbums" [value]="album" >{{album.title}}</option>
+        <select [ngModel]="currentAlbumInput" (ngModelChange)="updateAlbumInput($event)">
+            <option *ngFor="#album of dzAlbums" [value]="album.id" >{{album.title}}</option>
         </select>
     </p>
     <p *ngIf="dzPlaylists">
         Playlist
-        <select [ngModel]="currentPlaylistInput" (ngModelChange)="updateContainerInput($event)">
-            <option *ngFor="#playlist of dzPlaylists" [value]="playlist" >{{playlist.title}}</option>
+        <select [ngModel]="currentPlaylistInput" (ngModelChange)="updatePlaylistInput($event)">
+            <option *ngFor="#playlist of dzPlaylists" [value]="playlist.id" >{{playlist.title}}</option>
         </select>
     </p>
     </div>
