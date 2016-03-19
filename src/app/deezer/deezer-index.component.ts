@@ -128,6 +128,7 @@ export class DeezerIndexComponent implements OnInit {
     }
 
     updateExempleInput(event){
+        console.log(event.tostring());
         if (event == "playlist"){
             this.exempleByType = this.exemplesList[0];
         }
@@ -137,16 +138,12 @@ export class DeezerIndexComponent implements OnInit {
     }
 
     updateContainerInput(event){
-        console.log(JSON.stringify(event));
-        console.log(JSON.parse(event).id);
+        console.log(event.toString());
         console.log(event.type);
         if (event){
             this.currentContainer=event;
             this.id = event.id;
             this.listType = event.type;
         }
-        console.log(this.currentContainer);
-        console.log(this.id);
-        console.log(this.listType);
     }
 }
