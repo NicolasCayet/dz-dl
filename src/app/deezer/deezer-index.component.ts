@@ -8,13 +8,15 @@ import {TracksComponent} from "../tracks/tracks-index.component";
 import {OnInit} from 'angular2/core';
 import {AuthenticationService} from "../auth/authentication.service";
 import {ContainerEntity} from "../entities/container.entity";
+import {ContainerDisplayComponent} from "../container/container-display.component";
+import {AlertService} from "../app/alert.service";
 
 @Component({
     selector: 'my-deezer-form',
     templateUrl: 'app/deezer/deezer-index.component.html',
     styleUrls: ['app/deezer/deezer-index.component.css'],
     viewProviders: [HTTP_PROVIDERS],
-    directives: [TracksComponent]
+    directives: [TracksComponent,ContainerDisplayComponent]
 })
 export class DeezerIndexComponent implements OnInit {
     dzTrackList: TrackEntity[];
@@ -24,6 +26,9 @@ export class DeezerIndexComponent implements OnInit {
     // Deezer playlist/album ID parameters
     id: string;
     listType: string = "playlist";
+    currentAlbumInput: ContainerEntity;
+    currentPlaylistInput: ContainerEntity;
+    currentContainer: ContainerEntity;
 
     exempleByType: any;
 
@@ -52,14 +57,25 @@ export class DeezerIndexComponent implements OnInit {
     constructor(
         private _service:TracksService,
         private _deezerParsingService: DeezerParsingService,
+        private _alertService: AlertService,
         private authService: AuthenticationService
     )
     {}
 
     ngOnInit() {
+
+        console.log(this.authService.currentUser);
+        console.log(this.authService.currentUser.account);
         this.updateExempleInput(this.listType);
-       // this.getAlbums();
-       // this.getPLaylists();
+        this.getAlbums();
+        this.getPLaylists();
+        if(!this.authService.currentUser.account){
+            this._alertService.pushAlert({
+                type: 'warning',
+                message: 'Require deezer auth to fetch user playlist and albums',
+                dismissible: true
+            });
+        }
     }
 
     fetchTracks(){
@@ -94,6 +110,8 @@ export class DeezerIndexComponent implements OnInit {
 
                 }
             );
+        }else {
+
         }
     }
 
@@ -117,6 +135,15 @@ export class DeezerIndexComponent implements OnInit {
         }
         else if(event == "album") {
             this.exempleByType = this.exemplesList[1];
+        }
+    }
+
+    updateContainerInput(event){
+        console.log(event);
+        if (event){
+            this.currentContainer=event;
+            this.id = event.id;
+            this.listType = event.type;
         }
     }
 }

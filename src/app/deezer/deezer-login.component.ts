@@ -13,7 +13,8 @@ export class DeezerLoginComponent {
 
     constructor(private _authService: AuthenticationService, private _alertService: AlertService, router: Router) {
         DZ.init({
-            appId: '173331',
+           // appId: '173331',
+            appId: '175101',
             channelUrl: location.origin + '/deezer-channel-jsonp.html'
         });
     }
