@@ -28,6 +28,12 @@ export class DeezerIndexComponent implements OnInit {
     listType: string = "playlist";
     currentContainer: ContainerEntity;
 
+    // Not suppose to stay here
+    containerList: any[] = [
+        {name:"Playlist",value:"playlist"},
+        {name:"Album",value:"album"}
+    ];
+
 
     constructor(
         private _service:TracksService,
@@ -62,9 +68,9 @@ export class DeezerIndexComponent implements OnInit {
                     result => {
                         this.dzTrackList = this._deezerParsingService.handleJsonTracks(result);
                     },
-                     error => {
+                    error => {
 
-                     }
+                    }
                 );
             }
         }

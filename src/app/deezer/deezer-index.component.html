@@ -1,9 +1,18 @@
 <h3>Fetch a playlist or an album</h3>
 
 <div id="searchBar">
-    <div>
-        <p>
-            <my-container-display [container]="currentContainer"></my-container-display>
+
+        <p *ngIf="dzAlbums">
+            Albums
+            <select [ngModel]="currentAlbumInput" (ngModelChange)="updateAlbumInput($event)">
+                <option *ngFor="#album of dzAlbums" [value]="album.id" >{{album.artist_name}}: {{album.title}}</option>
+            </select>
+        </p>
+        <p *ngIf="dzPlaylists">
+            Playlist
+            <select [ngModel]="currentPlaylistInput" (ngModelChange)="updatePlaylistInput($event)">
+                <option *ngFor="#playlist of dzPlaylists" [value]="playlist.id" >{{playlist.title}}</option>
+            </select>
         </p>
         <p>
             Type
@@ -21,18 +30,7 @@
     </div>
     <div *ngIf="authService.currentUser.account">
 
-    <p *ngIf="dzAlbums">
-        Albums
-        <select (ngModelChange)="updateAlbumInput($event)">
-            <option *ngFor="#album of dzAlbums" [value]="album.id" >{{album.artist_name}}: {{album.title}}</option>
-        </select>
-    </p>
-    <p *ngIf="dzPlaylists">
-        Playlist
-        <select (ngModelChange)="updatePlaylistInput($event)">
-            <option *ngFor="#playlist of dzPlaylists" [value]="playlist.id" >{{playlist.title}}</option>
-        </select>
-    </p>
-    </div>
+
 </div>
+<my-container-display [container]="currentContainer"></my-container-display>
 <my-track-index [trackList]="dzTrackList"></my-track-index>
