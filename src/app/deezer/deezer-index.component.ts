@@ -26,8 +26,6 @@ export class DeezerIndexComponent implements OnInit {
     // Deezer playlist/album ID parameters
     id: string;
     listType: string = "playlist";
-    currentAlbumInput: ContainerEntity;
-    currentPlaylistInput: ContainerEntity;
     currentContainer: ContainerEntity;
 
 
