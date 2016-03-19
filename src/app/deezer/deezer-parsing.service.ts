@@ -56,7 +56,7 @@ export class DeezerParsingService {
         return this.containerList;
     }
 
-    albumsContainerEntity(jsonContainer:any){
+    playlistsContainerEntitty(jsonContainer:any){
        return {
            id: jsonContainer.id,
            title: jsonContainer.title,
@@ -70,7 +70,7 @@ export class DeezerParsingService {
         }
     }
 
-    playlistsContainerEntitty(jsonContainer:any){
+    albumsContainerEntity(jsonContainer:any){
         return {
             id: jsonContainer.id,
             title: jsonContainer.title,
