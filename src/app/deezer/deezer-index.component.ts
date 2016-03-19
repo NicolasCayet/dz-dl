@@ -139,7 +139,7 @@ export class DeezerIndexComponent implements OnInit {
 
     updateAlbumInput(event){
         if (event){
-            //this.currentContainer=event;
+            this.currentContainer= this.findContainerByidAndType(event,"album");
             this.id = event;
             this.listType = "album";
         }
@@ -147,9 +147,22 @@ export class DeezerIndexComponent implements OnInit {
 
     updatePlaylistInput(event){
         if (event){
-           // this.currentContainer=event;
+            this.currentContainer= this.findContainerByidAndType(event,"playlist");
             this.id = event;
             this.listType = "playlist";
         }
+    }
+
+    findContainerByidAndType(id:string,type:string){
+        let list = type == "album" ?  this.dzAlbums : this.dzPlaylists;
+        for (let cont of list){
+            if(cont.id.toString() == id){
+                console.log("findContainerByidAndType")
+                console.log(cont);
+                console.log("findContainerByidAndType")
+                return cont;
+            }
+        }
+        return null;
     }
 }
