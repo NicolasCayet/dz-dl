@@ -17,11 +17,11 @@ export class DeezerAPIService {
     }
 
     getPlaylists(userId:string){
-        return this.getHttp(this.buildTracksUri(userId,"playlists"));
+        return this.getHttp(this.buildContainerUri(userId,"playlists"));
     }
 
     getAlbums(userId:string){
-        return this.getHttp(this.buildTracksUri(userId,"albums"));
+        return this.getHttp(this.buildContainerUri(userId,"albums"));
     }
 
     //Exemples
