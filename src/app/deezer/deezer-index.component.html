@@ -22,7 +22,7 @@
         <button (click)="fetchTracks()">Fetch</button>
     </p>
     </div>
-    <div *ngIf="authService.currentUser.account.name">
+    <div *ngIf="authService.currentUser.account">
 
         {{dzPlaylists}}
         {{dzAlbums}}
