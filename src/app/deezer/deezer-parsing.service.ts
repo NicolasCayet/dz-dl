@@ -42,6 +42,7 @@ export class DeezerParsingService {
 
             // To reset the list for not adding witch each fetching
             this.containerList = [];
+            console.log(data["data"]);
             for (let i = 0; i < data["data"].length; i++) {
                 jsonContainer = data["data"][i];
                 if(type == "album"){
