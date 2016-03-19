@@ -14,11 +14,11 @@ const gulpremote = require('gulp-remote-src');
 // Command `clean`
 // clean the contents of the distribution directory
 gulp.task('clean', function (cb) {
-    del('dist/**/*').then(paths => cb());
+    del('dist/**/*').then(paths = cb());
 });
 // clean only the app directory (containing compiled .ts app files)
 gulp.task('clean:app', function (cb) {
-    del('dist/app/*').then(paths => cb());
+    del('dist/app/*').then(paths = cb());
 });
 
 // Command `copy:assets`
