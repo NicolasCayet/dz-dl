@@ -22,5 +22,4 @@ export class TracksService {
     getDeezerPlaylists(id:string){
         return this._deezerAPIService.getPlaylists(id);
     }
-
 }

@@ -19,14 +19,13 @@ import {AlertService} from "../app/alert.service";
     directives: [TracksComponent,ContainerDisplayComponent]
 })
 export class DeezerIndexComponent implements OnInit {
-    dzTrackList: TrackEntity[];
     dzPlaylists: ContainerEntity[];
     dzAlbums: ContainerEntity[];
+    currentContainer: ContainerEntity;
 
     // Deezer playlist/album ID parameters
     id: string;
     listType: string = "playlist";
-    currentContainer: ContainerEntity;
 
     // Not suppose to stay here
     containerList: any[] = [
@@ -66,7 +65,7 @@ export class DeezerIndexComponent implements OnInit {
                 let obs = this._service.getTracksByType(this.id.toString(),this.listType);
                 obs.subscribe(
                     result => {
-                        this.dzTrackList = this._deezerParsingService.handleJsonTracks(result);
+                        this.currentContainer = this._deezerParsingService.handleJsonTracks(result);
                     },
                     error => {
 

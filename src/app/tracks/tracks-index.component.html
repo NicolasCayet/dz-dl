@@ -1,7 +1,7 @@
-<div id="tracksContainer" *ngIf="trackList">
+<div id="tracksContainer" *ngIf="container">
     <div id="leftGrid" class="grid grid-pad" >
-        <div *ngFor="#track of trackList"  class="trackItem col-1-4" >
-                <h4>{{track.artistName + ": " + track.title +" : " + track.duration + " sec." }}</h4>
+        <div *ngFor="#wrapper of container.wrappers"  class="trackItem col-1-4" >
+                <h4>{{wrapper.track.artistName + ": " + wrapper.track.title +" : " + wrapper.track.duration + " sec." }}</h4>
         </div>
     </div>
     <div id="rightGrid">
