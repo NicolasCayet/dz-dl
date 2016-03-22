@@ -1,0 +1,8 @@
+<ul>
+    <li *ngFor="#result of searchResults | slice:0:5">
+        <div>
+            <iframe src="https://www.youtube.com/embed/{{ result.videoId }}"></iframe>
+        </div>
+        <label>Video #{{ result.videoId }}:</label> {{ result.title }} <b>{{ result.relevance | relevanceLabel }}</b> {{ result.publishedAt | date:'longDate' }}
+    </li>
+</ul>

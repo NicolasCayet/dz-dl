@@ -1,6 +1,23 @@
-<ul>
-    <li *ngFor="#result of searchResults">
-        <img *ngIf="result.smallImageUri" src="{{ result.smallImageUri }}" />
-        <label>Video #{{ result.videoId }}:</label> {{ result.title }}
-    </li>
-</ul>
+<div class="container">
+    <ul>
+        <li *ngFor="#track of tracks">
+            <div class="form-group">
+                <label for="titleInput">Title</label>
+                <input id="titleInput" [(ngModel)]="track.title">
+            </div>
+            <div class="form-group">
+                <label for="artistInput">Artist name</label>
+                <input id="artistInput" [(ngModel)]="track.artistName">
+            </div>
+            <div class="form-group">
+                <label for="durationInput">Duration</label>
+                <input id="durationInput" [(ngModel)]="track.duration">
+            </div>
+            <youtube-search-results *ngIf="track.youtubeSearchResults" [searchResults]="track.youtubeSearchResults">
+
+            </youtube-search-results>
+        </li>
+    </ul>
+
+    <button class="btn btn-primary" (click)="search()">Search on Youtube</button>
+</div>
