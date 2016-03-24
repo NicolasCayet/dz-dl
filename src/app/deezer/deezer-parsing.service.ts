@@ -1,6 +1,6 @@
 import {Injectable} from "angular2/core";
 import {TrackEntity} from "../entities/track.entity";
-import {ContainerEntity} from "../entities/container.entity";y.js;
+import {ContainerEntity} from "../entities/container.entity";
 import {WrapperEntity} from "../entities/wrapper.entity";
 
 @Injectable()
