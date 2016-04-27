@@ -2,19 +2,32 @@ import {Injectable} from 'angular2/core';
 import {CurrentUserEntity} from './current-user.entity.ts';
 
 const REMEMBERED_ID_KEY = 'rememberedId';
+const SAVED_PROFILE_KEY = 'savedProfile';
 
 @Injectable()
 export class CurrentUserService {
-    private fakeUser: CurrentUserEntity = {
-        id: 1,
-        nickname: 'toto',
-        account:null
-    };
+    getMockUser(): CurrentUserEntity {
+        let user;
+        try {
+            user = JSON.parse(localStorage.getItem(SAVED_PROFILE_KEY));
+        } catch(e) {
+            // silent error
+        }
+        if (!user) {
+            user = {
+                id: 1,
+                nickname: 'toto',
+                account:null
+            };
+            this.update(user).then();
+        }
+        return user;
+    }
 
     getById(id: number): Promise<CurrentUserEntity> {
         return new Promise((resolve, reject) => {
-            if (id == this.fakeUser.id) {
-                resolve(this.fakeUser);
+            if (id == this.getMockUser().id) {
+                resolve(this.getMockUser());
             } else {
                 reject(null);
             }
@@ -23,8 +36,8 @@ export class CurrentUserService {
 
     getByNickname(nickname: string): Promise<CurrentUserEntity> {
         return new Promise((resolve, reject) => {
-            if (nickname == this.fakeUser.nickname) {
-                resolve(this.fakeUser);
+            if (nickname == this.getMockUser().nickname) {
+                resolve(this.getMockUser());
             } else {
                 reject(null);
             }
@@ -56,5 +69,21 @@ export class CurrentUserService {
 
     removeRemembered() {
         localStorage.removeItem(REMEMBERED_ID_KEY)
+    }
+
+    /**
+     * Persist user data, returns the modified version
+     * @param CurrentUserEntity currentUser
+     * @returns {Promise<CurrentUserEntity>|Promise}
+     */
+    update(currentUser: CurrentUserEntity): Promise<CurrentUserEntity> {
+        return new Promise((resolve, reject) => {
+            try {
+                localStorage.setItem(SAVED_PROFILE_KEY, JSON.stringify(currentUser));
+                resolve(currentUser);
+            } catch(e) {
+                reject(null);
+            }
+        });
     }
 }
