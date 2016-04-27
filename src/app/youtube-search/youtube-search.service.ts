@@ -136,7 +136,8 @@ export class YoutubeSearchService {
         let definition: string = 'any';
         let order: string;
 
-        query = query.replace('/\s/i', '+');
+        query = encodeURIComponent(query);
+
         switch (orderBy) {
             case YoutubeOrderBy.DATE:
                 order = 'date';
