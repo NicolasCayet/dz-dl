@@ -1,7 +1,6 @@
 import {Injectable} from "angular2/core";
 import {TrackEntity} from "../entities/track.entity";
 import {ContainerEntity} from "../entities/container.entity";
-import js = webdriver.By.js;
 
 @Injectable()
 export class DeezerParsingService {
@@ -43,11 +42,10 @@ export class DeezerParsingService {
 
             // To reset the list for not adding witch each fetching
             this.containerList = [];
-            console.log(data["data"]);
             for (let i = 0; i < data["data"].length; i++) {
                 jsonContainer = data["data"][i];
                 if(type == "album"){
-                    this.container  = this.albumsContainerEntity(jsonContainer);
+                    this.container = this.albumsContainerEntity(jsonContainer);
                 }else if(type == "playlist"){
                     this.container = this.playlistsContainerEntitty(jsonContainer);
                 }
@@ -57,7 +55,7 @@ export class DeezerParsingService {
         return this.containerList;
     }
 
-    playlistsContainerEntitty(jsonContainer:any){
+    playlistsContainerEntitty(jsonContainer:any): ContainerEntity{
        return {
            id: jsonContainer.id,
            title: jsonContainer.title,
@@ -72,7 +70,7 @@ export class DeezerParsingService {
         }
     }
 
-    albumsContainerEntity(jsonContainer:any){
+    albumsContainerEntity(jsonContainer:any): ContainerEntity{
         return {
             id: jsonContainer.id,
             title: jsonContainer.title,
@@ -81,7 +79,7 @@ export class DeezerParsingService {
             picture_small:jsonContainer.cover_small,
             picture_medium:jsonContainer.cover_medium,
             picture_big: jsonContainer.cover_big,
-            duration: "",
+            duration: jsonContainer.duration,
             nb_tracks: jsonContainer.nb_tracks,
             artist_name: jsonContainer.artist.name
         }
