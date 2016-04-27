@@ -1,7 +1,8 @@
 declare module 'config'{
-    interface GoogleApiConfig {
+    export var google_api: {
         key: string
-    }
-
-    export var google_api: GoogleApiConfig;
+    };
+    export var deezer: {
+        app_id: string;
+    };
 }

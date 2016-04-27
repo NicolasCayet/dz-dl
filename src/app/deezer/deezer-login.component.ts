@@ -4,6 +4,7 @@ import {Router} from 'angular2/router';
 import {DateUtil} from '../common/date.util';
 import {AlertService} from '../app/alert.service';
 import {AccountEntity} from "../entities/account.entity";
+import {ConfigService} from "../common/config.service";
 
 @Component({
     selector: 'login',
@@ -11,9 +12,9 @@ import {AccountEntity} from "../entities/account.entity";
 })
 export class DeezerLoginComponent {
 
-    constructor(private _authService: AuthenticationService, private _alertService: AlertService, router: Router) {
+    constructor(private _authService: AuthenticationService, private _alertService: AlertService, router: Router, config: ConfigService) {
         DZ.init({
-            appId: '173331',
+            appId: config.get('deezer.app_id'),
             channelUrl: location.origin + '/deezer-channel-jsonp.html'
         });
     }
