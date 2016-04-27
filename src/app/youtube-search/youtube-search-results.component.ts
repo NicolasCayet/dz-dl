@@ -1,12 +1,101 @@
 import {Component, Input} from 'angular2/core';
-import {RelevancePipe} from './youtube-search.pipes';
-import {YoutubeSearchResult} from './youtube-search.service';
+import {RelevancePipe, VideoDefinitionPipe} from './youtube-search.pipes';
+import {YoutubeSearchResult, Relevance} from './youtube-search.service';
+import {isArray} from "angular2/src/facade/lang";
+
+interface ResultDecorators {
+    embedYoutubeUrl: string;
+    selected: boolean;
+}
 
 @Component({
     selector: 'youtube-search-results',
     templateUrl: 'app/youtube-search/youtube-search-results.component.html',
-    inputs: ['searchResults'],
-    pipes: [RelevancePipe]
+    styles: [`
+        .preview img {
+            cursor: pointer;
+        }
+        .search-result {
+            border: solid 1px black;
+        }
+        .search-result.selected {
+            border: solid 2px green;
+        }
+        :host >>> span.relevance-valid {
+            background-color: #E3FCE4;
+        }
+        :host >>> span.relevance-invalid {
+            background-color: #FCE3E3;
+        }
+    `],
+    pipes: [RelevancePipe, VideoDefinitionPipe]
 })
 export class YoutubeSearchResultsComponent {
+    @Input() searchResults: YoutubeSearchResult[];
+    decorators: ResultDecorators[] = [];
+
+    ngOnChanges(changes) {
+        if (changes.hasOwnProperty('searchResults')) {
+            this.decorators = [];
+            let i;
+            let bestMatchFound = false;
+            let selected = false;
+            for (i in changes.searchResults.currentValue) {
+                if (changes.searchResults.currentValue[i].relevance === Relevance.FULLMATCH &&
+                    !bestMatchFound) {
+                    selected = true;
+                    bestMatchFound = true;
+                } else {
+                    selected = false;
+                }
+                this.decorators.push({
+                    embedYoutubeUrl: null,
+                    selected: selected
+                });
+            }
+        }
+    }
+
+    selectResult(resultIndex) {
+        let selected = this.decorators.find(decorator => {
+            return decorator.selected;
+        });
+        if (selected) {
+            selected.selected = false;
+        }
+        this.decorators[resultIndex].selected = true;
+    }
+
+    toggleYoutubePreview(resultIndex: number, $event) {
+        $event.stopPropagation();
+        if (this.decorators[resultIndex].embedYoutubeUrl) {
+            this.decorators[resultIndex].embedYoutubeUrl = null;
+        } else {
+            this.decorators[resultIndex].embedYoutubeUrl =
+                'https://www.youtube.com/embed/' + this.searchResults[resultIndex].videoId + '?autoplay=true';
+        }
+    }
+
+    decorateTitleByRelevance(result: YoutubeSearchResult): string {
+        let titleReturn = result.title;
+        if (result.relevanceResults && isArray(result.relevanceResults.title)) {
+            let indexOf;
+            let prepend;
+            let append = '</span>';
+            let newTitle;
+            result.relevanceResults.title.forEach(relevance => {
+                indexOf = titleReturn.toLowerCase().indexOf(relevance.str.toLowerCase());
+                if (indexOf !== -1) {
+                    prepend = '<span class="';
+                    prepend += relevance.authorizedWord ? 'relevance-valid' : 'relevance-invalid';
+                    prepend += '">';
+                    newTitle = titleReturn.substring(0, indexOf);
+                    newTitle += `${prepend}${titleReturn.substring(indexOf, indexOf + relevance.str.length)}${append}`;
+                    newTitle += titleReturn.substring(indexOf + relevance.str.length);
+                    titleReturn = newTitle;
+                }
+            });
+        }
+        return titleReturn;
+    }
 }

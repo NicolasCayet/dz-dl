@@ -1,42 +1,58 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, Input} from 'angular2/core';
 import {YoutubeSearchService, YoutubeSearchResult, YoutubeSearchFilters, YoutubeOrderBy, VideoDefinition} from './youtube-search.service';
 import {TrackEntity} from '../entities/track.entity';
 import {YoutubeSearchResultsComponent} from './youtube-search-results.component';
+import {YoutubeOrderPipe} from './youtube-search.pipes';
 
 @Component({
     selector: 'youtube-search',
     templateUrl: 'app/youtube-search/youtube-search.component.html',
-    directives: [YoutubeSearchResultsComponent]
+    styles: [
+        `.toggle-filters {
+            float:left;
+            margin-right: 3px;
+            margin-bottom: 3px;
+        }`
+    ],
+    directives: [YoutubeSearchResultsComponent],
+    pipes: [YoutubeOrderPipe]
 })
 export class YoutubeSearchComponent implements OnInit {
-    public tracks: TrackEntity[];
+    @Input('track') public track: TrackEntity;
+    public filter: YoutubeSearchFilters;
+    public youtubeSearchResults: YoutubeSearchResult[];
+
+    private youtubeOrders = [];
+    private showFilters = false;
 
     constructor(private _searchService: YoutubeSearchService) {
-        // this.tracks = tracks;
-        this.tracks = [
-            { title:'Last Living Souls', artistName: 'Gorillaz', duration: 195, id: 0},
-            { title:'Love Generation', artistName: 'Bob Sinclar', duration: 511, id: 0},
-            { title:'All Star', artistName: 'Smash Mouth', duration: 201, id: 0}
-        ];
+        for (let key in YoutubeOrderBy) {
+            if (isNaN(+key)) {
+                this.youtubeOrders.push(YoutubeOrderBy[key]);
+            }
+        }
     }
 
-    ngOnInit() { }
-
-    search() {
-        let filter: YoutubeSearchFilters;
-        let track: TrackEntity;
-        for (let index in this.tracks) {
-            track = this.tracks[index];
-            filter = {
-                title: track.title,
-                artistName: track.artistName,
-                duration: track.duration,
-                order: YoutubeOrderBy.RELEVANCE,
-                definition: null
-            };
-            this._searchService.getByFilters(filter).subscribe(results => {
-                this.tracks[index].youtubeSearchResults = results; console.dir(results);
-            });
+    ngOnInit() {
+        if (!this.track) {
+            // provide a sample
+            this.track = { title:'Last Living Souls', artistName: 'Gorillaz', duration: 195, id: 0};
         }
+        this.filter = {
+            title: this.track.title,
+            artistName: this.track.artistName,
+            duration: this.track.duration,
+            order: YoutubeOrderBy.RELEVANCE,
+            definition: null
+        }
+        this.refresh();
+    }
+
+    refresh() {
+        this._searchService.getByFilters(this.filter).subscribe(results => this.youtubeSearchResults = results);
+    }
+
+    private castToNumber(value) {
+        return +value;
     }
 }

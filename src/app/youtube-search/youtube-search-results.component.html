@@ -1,8 +1,26 @@
-<ul>
-    <li *ngFor="#result of searchResults | slice:0:5">
-        <div>
-            <iframe src="https://www.youtube.com/embed/{{ result.videoId }}"></iframe>
+<div *ngIf="decorators.length === searchResults.length">
+    <div *ngFor="#result of searchResults | slice:0:5; #i = index"
+        [class.selected]="decorators[i].selected" (click)="selectResult(i)"
+        [class.col-sm-2]="!decorators[i].selected" [class.col-sm-4]="decorators[i].selected"
+        class="search-result">
+        <div class="text-center preview">
+            <img class="center-block img-responsive" (click)="toggleYoutubePreview(i, $event)"
+                 [class.hidden]="decorators[i].embedYoutubeUrl" [src]="result.smallImageUri" *ngIf="result.smallImageUri"/>
+            <iframe *ngIf="decorators[i].embedYoutubeUrl" [src]="decorators[i].embedYoutubeUrl"
+                class="center-block img-responsive"></iframe>
+            <div class="clearfix"></div>
+            <button (click)="toggleYoutubePreview(i, $event)" class="btn btn-xs">
+                <span class="glyphicon"
+                      [class.glyphicon-play]="!decorators[i].embedYoutubeUrl"
+                      [class.glyphicon-stop]="decorators[i].embedYoutubeUrl"></span>
+                Preview
+            </button>
         </div>
-        <label>Video #{{ result.videoId }}:</label> {{ result.title }} <b>{{ result.relevance | relevanceLabel }}</b> {{ result.publishedAt | date:'longDate' }}
-    </li>
-</ul>
+        <label [innerHtml]="decorateTitleByRelevance(result)"></label>
+        <div [class.small]="!decorators[i].selected">
+            Relevance: {{ result.relevance | relevanceLabel }}
+            <br>{{ result.definition | videoDefinitionLabel }} - <span [class.relevance-valid]="result.relevanceResults?.duration">{{ result.duration }}sec</span>.
+            <br>{{ result.publishedAt | date:'mediumDate' }}
+        </div>
+    </div>
+</div>

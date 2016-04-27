@@ -1,23 +1,23 @@
-<div class="container">
-    <ul>
-        <li *ngFor="#track of tracks">
-            <div class="form-group">
-                <label for="titleInput">Title</label>
-                <input id="titleInput" [(ngModel)]="track.title">
-            </div>
-            <div class="form-group">
-                <label for="artistInput">Artist name</label>
-                <input id="artistInput" [(ngModel)]="track.artistName">
-            </div>
-            <div class="form-group">
-                <label for="durationInput">Duration</label>
-                <input id="durationInput" [(ngModel)]="track.duration">
-            </div>
-            <youtube-search-results *ngIf="track.youtubeSearchResults" [searchResults]="track.youtubeSearchResults">
-
-            </youtube-search-results>
-        </li>
-    </ul>
-
-    <button class="btn btn-primary" (click)="search()">Search on Youtube</button>
+<button class="toggle-filters btn btn-default" (click)="showFilters = !showFilters">
+    <span class="glyphicon glyphicon-cog"></span>
+    <span [class.hidden]="showFilters">Modify search filters</span>
+    <span [class.hidden]="!showFilters" class="glyphicon glyphicon-menu-right"></span>
+    <span class="sr-only">Toggle filter settings</span>
+</button>
+<div [hidden]="!showFilters" *ngIf="filter" class="filter">
+    <form class="form-inline" (submit)="refresh()">
+        <input class="form-control" type="text" [(ngModel)]="filter.title" />
+        <input class="form-control" type="text" [(ngModel)]="filter.artistName" />
+        <input class="form-control" type="text" [(ngModel)]="filter.duration" />
+        <select class="form-control" [ngModel]="filter.order" (ngModelChange)="filter.order = castToNumber($event)">
+            <option *ngFor="#youtubeOrder of youtubeOrders" [value]="youtubeOrder">
+                {{ youtubeOrder | youtubeOrderLabel }}
+            </option>
+        </select>
+        <button type="submit" class="btn"><span class="glyphicon glyphicon-refresh"></span><span class="sr-only">Refresh</span></button>
+    </form>
 </div>
+<div class="clearfix"></div>
+<youtube-search-results *ngIf="youtubeSearchResults" [searchResults]="youtubeSearchResults">
+
+</youtube-search-results>

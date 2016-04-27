@@ -15,6 +15,13 @@ export interface YoutubeSearchResult {
     publishedAt: Date;
     duration: number; // in seconds
     definition: VideoDefinition; // VideoDefinition.HD value means it is also available in SD
+    relevanceResults?: {
+        title?: {
+            str: string;
+            authorizedWord: boolean;
+        }[];
+        duration?: boolean;
+    }
 };
 
 export enum Relevance {
@@ -106,7 +113,9 @@ export class YoutubeSearchService {
                         });
 
                         response.items.forEach((item: YoutubeSearchApiResult) => {
-                            searchResults.push(this.mapApiToSearchResult(item, videoDetailsMap.get(item.id.videoId)));
+                            let result = this.mapApiToSearchResult(item, videoDetailsMap.get(item.id.videoId));
+                            result.relevance = this.resolveRelevance(result, filters);
+                            searchResults.push(result);
                         });
 
                         return searchResults;
@@ -165,7 +174,7 @@ export class YoutubeSearchService {
         if (ids.length > 50 || ids.length <= 0) {
             throw 'Trying to get more details about Youtube videos but got an invalid number of ids (got ' + ids.length + ' instead of > 0 && <= 50)';
         }
-        let fields = 'items(id,contentDetails(duration))';
+        let fields = 'items(id,contentDetails(duration,definition))';
         return 'https://www.googleapis.com/youtube/v3/videos' +
             '?part=contentDetails' +
             '&id=' + ids.join(',') +
@@ -185,9 +194,63 @@ export class YoutubeSearchService {
         };
     }
 
-    private resolveRelevance(result: YoutubeSearchResult, filters: YoutubeSearchFilters): YoutubeSearchResult {
-        result.relevance = Relevance.BAD;
+    private resolveRelevance(result: YoutubeSearchResult, filters: YoutubeSearchFilters): Relevance {
+        result.relevanceResults = {};
+        let relLevel = 0;
+        // check video duration
+        let allowedDiff = 15;
+        let timeDiff = result.duration - filters.duration;
+        if (result.duration && filters.duration &&
+            timeDiff <= allowedDiff && timeDiff >= (-1 * allowedDiff) ) {
+            result.relevanceResults.duration = true;
+            relLevel++;
+        }
+        // check video title
+        result.relevanceResults.title = [];
+        let lowerTitle = result.title.toLowerCase();
+        let relevanceMatching;
+        [filters.artistName, filters.title].forEach(param => {
+            relevanceMatching = this.titleRelevanceMatching(lowerTitle, param.toLowerCase(), true);
+            if (relevanceMatching) {
+                result.relevanceResults.title.push(relevanceMatching);
+                relLevel++;
+            }
+        });
+        // check blacklisted word
+        let blacklisted = ['live', 'tribute'];
+        blacklisted.forEach(param => {
+            if (filters.title.toLowerCase().indexOf(param) !== -1 ||
+                filters.artistName.toLowerCase().indexOf(param) !== -1) {
+                return;
+            }
+            relevanceMatching = this.titleRelevanceMatching(lowerTitle, param, false);
+            if (relevanceMatching) {
+                result.relevanceResults.title.push(relevanceMatching);
+                relLevel--;
+            }
+        });
 
-        return result;
+        if (relLevel <= 0) {
+            return Relevance.BAD;
+        } else if (relLevel === 1) {
+            return Relevance.LOW;
+        } else if (relLevel === 2) {
+            return Relevance.HIGH;
+        } else {
+            return Relevance.FULLMATCH;
+        }
+    }
+
+    private titleRelevanceMatching(title: string, match: string, authorized: boolean):
+        {str:string, authorizedWord: boolean}|boolean {
+        let indexOf = title.indexOf(match);
+        if (indexOf !== -1) {
+            return {
+                str: match,
+                authorizedWord: authorized
+            }
+        } else {
+            return false;
+        }
     }
 }

@@ -1,10 +1,17 @@
-<div id="tracksContainer" *ngIf="trackList">
-    <div id="leftGrid" class="grid grid-pad" >
-        <div *ngFor="#track of trackList"  class="trackItem col-1-4" >
-                <h4>{{track.artistName + ": " + track.title +" : " + track.duration + " sec." }}</h4>
+<div *ngIf="trackList">
+    <div *ngFor="#track of trackList"  class="track-item row">
+        <div class="col-sm-4">
+            <dl class="dl-horizontal">
+                <dt>Title</dt>
+                <dd>{{ track.title }}</dd>
+                <dt>Artist</dt>
+                <dd>{{ track.artistName }}</dd>
+                <dt>Duration</dt>
+                <dd>{{ track.duration }} sec.</dd>
+            </dl>
         </div>
-    </div>
-    <div id="rightGrid">
-
+        <div class="col-sm-8">
+            <youtube-search [track]="track"></youtube-search>
+        </div>
     </div>
 </div>
