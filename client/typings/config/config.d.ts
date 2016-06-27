@@ -5,4 +5,7 @@ declare module 'config'{
     export var deezer: {
         app_id: string;
     };
+    export var backend: {
+        url: string;
+    };
 }

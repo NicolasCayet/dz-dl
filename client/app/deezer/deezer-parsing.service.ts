@@ -27,7 +27,21 @@ export class DeezerParsingService {
                     "id":jsonTrack.id ,
                     "title": jsonTrack.title,
                     "duration":jsonTrack.duration,
-                    "artistName": jsonTrack["artist"].name,
+                    "artistName": jsonTrack.artist.name,
+                }
+                // parse album data
+                if (json.type === 'playlist' && jsonTrack.album) {
+                    this.track.album = {
+                        title: jsonTrack.album.title,
+                        coverUrl: jsonTrack.album.cover_medium
+                    };
+                } else if (json.type === 'album') {
+                    this.track.album = {
+                        title: json.title,
+                        coverUrl: json.cover_medium,
+                        totalNumber: json.nb_tracks,
+                    };
+                    this.track.numberInAlbum = i + 1;
                 }
                 this.trackList.push(this.track);
             }

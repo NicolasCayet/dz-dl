@@ -6,6 +6,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {DateUtil} from '../common/date.util';
+import {empty} from "rxjs/Observer";
 
 export interface YoutubeSearchResult {
     videoId: string;
@@ -73,9 +74,6 @@ export enum YoutubeOrderBy {
     RATING
 };
 
-/**
- * Allow to print alert messages (warning/success/danger) from anywhere in the app
- */
 @Injectable()
 export class YoutubeSearchService {
     private apiKey: string;
@@ -101,6 +99,12 @@ export class YoutubeSearchService {
             .flatMap(response => {
                 // process another query to API getting video details (for videos' duration)
                 let ids = response.items.map(item => item.id.videoId);
+                if (ids.length === 0) {
+                    return Observable.create(observer => {
+                        observer.next([]);
+                        observer.complete();
+                    });
+                }
                 let videoDetailsMap = new Map<string, YoutubeVideoApiResult>();
                 let searchResults: YoutubeSearchResult[] = [];
                 return this._http.get(this.buildVideosDetailsUri(ids))

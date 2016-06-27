@@ -20,8 +20,8 @@ export class DeezerAPIService {
         return this.getHttp(this.buildContainerUri(userId,"playlists"));
     }
 
-    getAlbums(userId:string){
-        return this.getHttp(this.buildContainerUri(userId,"albums"));
+    getAlbums(userId:string, dzIndex: number){
+        return this.getHttp(this.buildContainerUri(userId,"albums", dzIndex));
     }
 
     //Exemples
@@ -33,8 +33,12 @@ export class DeezerAPIService {
 
     // https://api.deezer.com/user/2529/albums
     // https://api.deezer.com/user/2529/playlists
-    buildContainerUri(userId:string,type:string){
-        return "user/"+userId+"/"+type
+    buildContainerUri(userId:string,type:string, dzIndex:number = null){
+        let uri = "user/"+userId+"/"+type;
+        if (dzIndex) {
+            uri += '?index='+dzIndex;
+        }
+        return uri;
     }
 
     getHttp(uri:string){

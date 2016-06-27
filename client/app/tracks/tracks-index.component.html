@@ -1,0 +1,44 @@
+<div *ngIf="trackList">
+    <div>
+        <div *ngIf="searchProcessing">
+            Youtube search in process...
+        </div>
+        <button [disabled]="searchProcessing || downloadProcessing" (click)="downloadClick()">Download {{ countReadyToDl }} / {{ trackList.length }}</button>
+    </div>
+    <div *ngFor="#track of trackList; #i = index" class="track-item row">
+        <div class="col-sm-4">
+            <dl class="dl-horizontal">
+                <dt>Title</dt>
+                <dd>{{ track.title }}</dd>
+                <dt>Artist</dt>
+                <dd>{{ track.artistName }}</dd>
+                <dt>Duration</dt>
+                <dd>{{ track.duration }} sec.</dd>
+            </dl>
+            <div class="text-center">
+                <button (click)="toggleExcludeTrack(i)">
+                    <span *ngIf="selectedResults[i]?.excluded">Include</span>
+                    <span *ngIf="!selectedResults[i]?.excluded">Exclude</span>
+                </button>
+            </div>
+        </div>
+        <div class="col-sm-8" *ngIf="!selectedResults[i]?.excluded">
+            <div *ngIf="selectedResults[i]?.downloadError">
+                Download has encountered error. You may retry.
+            </div>
+            <youtube-search  *ngIf="!selectedResults[i]?.downloaded && !selectedResults[i]?.isDownloading"
+                    [track]="track" [container]="container"
+                            (selected)="addSelected(i, $event)"
+                            (searching)="isSearching(i, $event)"></youtube-search>
+            <div *ngIf="selectedResults[i]?.downloaded">
+                Downloaded!
+            </div>
+            <div *ngIf="selectedResults[i]?.isDownloading">
+                Downloading.....
+            </div>
+        </div>
+        <div class="col-sm-8" *ngIf="selectedResults[i]?.excluded">
+            Track is excluded from download
+        </div>
+    </div>
+</div>

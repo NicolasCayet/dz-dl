@@ -1,0 +1,11 @@
+{
+  "google_api": {
+    "key": "AIzaSyCx9TwgJXt2JNxnpUVikyAjxVpsJ6IskhE"
+  },
+  "deezer": {
+    "app_id": "175081"
+  },
+  "backend": {
+    "url": "http://localhost:3002"
+  }
+}

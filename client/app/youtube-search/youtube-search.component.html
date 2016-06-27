@@ -18,6 +18,6 @@
     </form>
 </div>
 <div class="clearfix"></div>
-<youtube-search-results *ngIf="youtubeSearchResults" [searchResults]="youtubeSearchResults">
+<youtube-search-results *ngIf="youtubeSearchResults" [searchResults]="youtubeSearchResults" [track]="track" [container]="container" (selected)="onSelected($event)">
 
 </youtube-search-results>

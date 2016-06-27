@@ -1,8 +1,9 @@
-import {Component, OnInit, Input} from 'angular2/core';
+import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
 import {YoutubeSearchService, YoutubeSearchResult, YoutubeSearchFilters, YoutubeOrderBy, VideoDefinition} from './youtube-search.service';
 import {TrackEntity} from '../entities/track.entity';
 import {YoutubeSearchResultsComponent} from './youtube-search-results.component';
 import {YoutubeOrderPipe} from './youtube-search.pipes';
+import {ContainerEntity} from "../entities/container.entity";
 
 @Component({
     selector: 'youtube-search',
@@ -19,8 +20,12 @@ import {YoutubeOrderPipe} from './youtube-search.pipes';
 })
 export class YoutubeSearchComponent implements OnInit {
     @Input('track') public track: TrackEntity;
+    @Input('container') public container: ContainerEntity;
+    @Output('selected') selectedEvent = new EventEmitter<YoutubeSearchResult>();
+    @Output() searching = new EventEmitter<boolean>();
     public filter: YoutubeSearchFilters;
     public youtubeSearchResults: YoutubeSearchResult[];
+    public selected: YoutubeSearchResult;
 
     private youtubeOrders = [];
     private showFilters = false;
@@ -38,8 +43,11 @@ export class YoutubeSearchComponent implements OnInit {
             // provide a sample
             this.track = { title:'Last Living Souls', artistName: 'Gorillaz', duration: 195, id: 0};
         }
+        // strip title part between parentheses
+        let title = this.track.title.replace(/\s*\(.+\)$/, '');
+
         this.filter = {
-            title: this.track.title,
+            title: title,
             artistName: this.track.artistName,
             duration: this.track.duration,
             order: YoutubeOrderBy.RELEVANCE,
@@ -49,7 +57,18 @@ export class YoutubeSearchComponent implements OnInit {
     }
 
     refresh() {
-        this._searchService.getByFilters(this.filter).subscribe(results => this.youtubeSearchResults = results);
+        this.selected = null;
+        this.selectedEvent.emit(this.selected);
+        this.searching.emit(true);
+        this._searchService.getByFilters(this.filter).subscribe(results => {
+            this.youtubeSearchResults = results;
+            this.searching.emit(false);
+        });
+    }
+
+    onSelected(value) {
+        this.selected = value;
+        this.selectedEvent.emit(this.selected);
     }
 
     private castToNumber(value) {

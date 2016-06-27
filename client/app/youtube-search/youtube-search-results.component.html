@@ -22,5 +22,8 @@
             <br>{{ result.definition | videoDefinitionLabel }} - <span [class.relevance-valid]="result.relevanceResults?.duration">{{ result.duration }}sec</span>.
             <br>{{ result.publishedAt | date:'mediumDate' }}
         </div>
+        <button (click)="tmpDownloadClick(result.videoId)" class="btn btn-xs">
+            Download Test
+        </button>
     </div>
 </div>

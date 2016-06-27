@@ -7,3 +7,4 @@ DeezerDL.iml
 /typings/
 !/src/typings/README.md
 /src/config/*
+/backend/downloads

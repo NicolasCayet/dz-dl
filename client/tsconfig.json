@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "app",
     "target": "ES5",
+    "rootDir": "app",
     "module": "system",
     "moduleResolution": "node",
     "sourceMap": true,
@@ -13,6 +13,6 @@
     "listFiles": true
   },
   "exclude": [
-    "node_modules"
+    "../node_modules"
   ]
 }

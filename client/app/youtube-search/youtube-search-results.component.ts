@@ -1,7 +1,12 @@
-import {Component, Input} from 'angular2/core';
+import {Component, Input, Output, EventEmitter} from 'angular2/core';
 import {RelevancePipe, VideoDefinitionPipe} from './youtube-search.pipes';
 import {YoutubeSearchResult, Relevance} from './youtube-search.service';
 import {isArray} from "angular2/src/facade/lang";
+import {TrackEntity} from "../entities/track.entity";
+import {Http} from "angular2/http";
+import {Headers} from "angular2/http";
+import {ConfigService} from "../common/config.service";
+import {ContainerEntity} from "../entities/container.entity";
 
 interface ResultDecorators {
     embedYoutubeUrl: string;
@@ -32,6 +37,9 @@ interface ResultDecorators {
 })
 export class YoutubeSearchResultsComponent {
     @Input() searchResults: YoutubeSearchResult[];
+    @Input('track') public track: TrackEntity;
+    @Input('container') public container: ContainerEntity;
+    @Output('selected') public selectedEvent = new EventEmitter<YoutubeSearchResult>();
     decorators: ResultDecorators[] = [];
 
     ngOnChanges(changes) {
@@ -45,6 +53,7 @@ export class YoutubeSearchResultsComponent {
                     !bestMatchFound) {
                     selected = true;
                     bestMatchFound = true;
+                    this.selectedEvent.emit(changes.searchResults.currentValue[i]);
                 } else {
                     selected = false;
                 }
@@ -64,6 +73,7 @@ export class YoutubeSearchResultsComponent {
             selected.selected = false;
         }
         this.decorators[resultIndex].selected = true;
+        this.selectedEvent.emit(this.searchResults[resultIndex]);
     }
 
     toggleYoutubePreview(resultIndex: number, $event) {
